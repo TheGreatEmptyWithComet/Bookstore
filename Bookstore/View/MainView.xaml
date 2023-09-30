@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
-        DataContext="{StaticResource mainViewModel}"
+        DataContext="{StaticResource mainVM}"
         Title="MainView" Height="675" Width="1200">
     <DockPanel >
         <!-- Menu grid-->
-        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginViewModel}">
+        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginVM}">
             <!-- Non-admin user menu -->
             <Menu HorizontalAlignment="Right"  Visibility="{Binding !IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
                 <MenuItem Header="Log in" Command="{Binding LoginCommand}"/>
@@ -30,9 +30,8 @@
 
 
         </Grid>
-        <Frame >
-
-        </Frame>
+        
+        <Frame Source="{Binding CurrentPage}"/>
 
     </DockPanel>
 </Window>

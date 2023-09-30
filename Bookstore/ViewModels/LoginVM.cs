@@ -12,8 +12,15 @@ using System.Collections.ObjectModel;
 
 namespace Bookstore
 {
-    public class LoginViewModel : NotifyPropertyChangeHandler
+    public class LoginVM : NotifyPropertyChangeHandler
     {
+        #region Delegates and events
+        //////////////////////////////////////////////////////////////////////////////////////////
+        public delegate void SetCurrentUser(User user);
+        public event SetCurrentUser OnSetCurrentUser;
+        #endregion
+
+
         #region Properties
         //////////////////////////////////////////////////////////////////////////////////////////
         private readonly Context context;
@@ -22,9 +29,9 @@ namespace Bookstore
         // DB row data
         private List<User> allUsers;
         // Data for WPF
-        public ObservableCollection<UserViewModel> Users { get { return new ObservableCollection<UserViewModel>(allUsers.Select(i => new UserViewModel(i))); } }
+        public ObservableCollection<UserVM> Users { get { return new ObservableCollection<UserVM>(allUsers.Select(i => new UserVM(i))); } }
 
-        public UserViewModel CurrentUser { get; private set; }
+        public UserVM CurrentUser { get; private set; }
 
         // Mode to define app window content to be shown
         private bool isAdminMode = false;
@@ -36,7 +43,7 @@ namespace Bookstore
                 if (isAdminMode != value)
                 {
                     isAdminMode = value;
-                    OnPropertyChanged(nameof(IsAdminMode));
+                    NotifyPropertyChanged(nameof(IsAdminMode));
                 }
             }
         }
@@ -54,7 +61,7 @@ namespace Bookstore
             set
             {
                 errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
+                NotifyPropertyChanged(nameof(ErrorMessage));
             }
         }
         #endregion
@@ -70,7 +77,7 @@ namespace Bookstore
 
         #region Constructor
         //////////////////////////////////////////////////////////////////////////////////////////
-        public LoginViewModel(Context context)
+        public LoginVM(Context context)
         {
             this.context = context;
 
@@ -82,6 +89,7 @@ namespace Bookstore
             LoginCommand = new RelayCommand(Login);
             CheckUserDataCommand = new RelayCommand(CheckUserData);
             LogoutCommand = new RelayCommand(Logout);
+
         }
         #endregion
 
@@ -100,6 +108,8 @@ namespace Bookstore
             {
                 // login is unique value and user existance is checked in CheckUserData() method
                 CurrentUser = Users.Where(user => user.Login == UserLogin).FirstOrDefault()!;
+                User currentUser = allUsers.Where(user => user.Login == UserLogin).FirstOrDefault()!;
+                OnSetCurrentUser?.Invoke(currentUser);
                 IsAdminMode = true;
             }
         }
@@ -128,7 +138,7 @@ namespace Bookstore
         public void LoadDataFromDB()
         {
             allUsers = context.Users.ToList();
-            OnPropertyChanged(nameof(Users));
+            NotifyPropertyChanged(nameof(Users));
         }
 
         #endregion

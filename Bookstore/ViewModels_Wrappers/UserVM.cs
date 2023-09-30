@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore
 {
-    public class UserViewModel : NotifyPropertyChangeHandler
+    public class UserVM : NotifyPropertyChangeHandler
     {
         public User Model { get; set; }
 
@@ -20,7 +20,7 @@ namespace Bookstore
                 if (Model.Login != value)
                 {
                     Model.Login = value;
-                    OnPropertyChanged(nameof(Login));
+                    NotifyPropertyChanged(nameof(Login));
                 }
             }
         }
@@ -32,12 +32,12 @@ namespace Bookstore
                 if (Model.Password != value)
                 {
                     Model.Password = value;
-                    OnPropertyChanged(nameof(Password));
+                    NotifyPropertyChanged(nameof(Password));
                 }
             }
         }
 
-        public UserViewModel(User user)
+        public UserVM(User user)
         {
             Model = user;
         }

@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        DataContext="{StaticResource mainViewModel}"
-        Title="Log in" Height="250" Width="230">
+        DataContext="{StaticResource mainVM}"
+        Title="Log in" Height="260" Width="230">
 
-    <Grid DataContext="{Binding LoginViewModel}">
+    <Grid DataContext="{Binding LoginVM}">
         <StackPanel Orientation="Vertical" Margin="10">
-            <StackPanel Orientation="Vertical" Height="140">
-                <TextBlock Text="Login:" FontSize="16"/>
-                <TextBox Text="{Binding UserLogin}" FontSize="16"/>
-                <TextBlock Text="Password:" FontSize="16"/>
-                <TextBox Text="{Binding UserPassword}" FontSize="16"/>
-                <TextBox Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="WrapWithOverflow" BorderThickness="0" FontSize="14"/>
+            <StackPanel Orientation="Vertical" Height="170">
+                <TextBlock Text="Login:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding UserLogin}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <TextBlock Text="Password:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding UserPassword}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <TextBlock Text="{Binding ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
             </StackPanel>
             <Button Content="Log in" Command="{Binding CheckUserDataCommand}" FontSize="16"/>
         </StackPanel>

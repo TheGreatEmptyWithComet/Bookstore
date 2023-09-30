@@ -4,13 +4,22 @@
              xmlns:local="clr-namespace:Bookstore"
              xmlns:viewes="clr-namespace:Bookstore.View"
              StartupUri="view\MainView.xaml">
-    
+
     <Application.Resources>
-        <!-- Create instance of main view model for using in all pages-->
-        <local:MainViewModel x:Key="mainViewModel"/>
+        
+        <ResourceDictionary>
+            <!-- Create instance of main view model for using in all pages-->
+            <local:MainVM x:Key="mainVM"/>
 
-        <!-- Converters -->
-        <local:IsAdminModeToVisibilityBoolToEnumConverter x:Key="isAdminModeToVisibilityBoolToEnumConverter"/>
+            <!-- Converters -->
+            <local:IsAdminModeToVisibilityBoolToEnumConverter x:Key="isAdminModeToVisibilityBoolToEnumConverter"/>
 
+            <!-- Styles -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/TextBlock.xaml"/>
+                <ResourceDictionary Source="Styles/TextBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
