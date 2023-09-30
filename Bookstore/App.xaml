@@ -2,8 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Bookstore"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewes="clr-namespace:Bookstore.View"
+             StartupUri="view\MainView.xaml">
+    
     <Application.Resources>
-         
+        <!-- Create instance of main view model for using in all pages-->
+        <local:MainViewModel x:Key="mainViewModel"/>
+
+        <!-- Converters -->
+        <local:IsAdminModeToVisibilityBoolToEnumConverter x:Key="isAdminModeToVisibilityBoolToEnumConverter"/>
+
     </Application.Resources>
 </Application>
