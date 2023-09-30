@@ -6,8 +6,9 @@
       xmlns:local="clr-namespace:Bookstore.View"
       mc:Ignorable="d" 
       Background="AliceBlue"
+      DataContext="{StaticResource mainVM}"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SourceDataView">
+      Title="SourceDataPageView">
 
     <DockPanel>
         <!-- Left menu -->
@@ -29,7 +30,7 @@
             <MenuItem Header="Users" Padding="3"/>
         </Menu>
 
-        <Frame Source="{Binding CurrentPage}"/>
+        <Frame Source="{Binding SourceDataVM.CurrentPage}" />
 
     </DockPanel>
 </Page>

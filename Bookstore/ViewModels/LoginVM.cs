@@ -15,14 +15,14 @@ namespace Bookstore
     public class LoginVM : NotifyPropertyChangeHandler
     {
         #region Delegates and events
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public delegate void SetCurrentUser(User user);
         public event SetCurrentUser OnSetCurrentUser;
         #endregion
 
 
         #region Properties
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         private readonly Context context;
         private LoginWindow loginWindow;
 
@@ -68,7 +68,7 @@ namespace Bookstore
 
 
         #region Commands
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public ICommand LoginCommand { get; private set; }
         public ICommand CheckUserDataCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
@@ -76,7 +76,7 @@ namespace Bookstore
 
 
         #region Constructor
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public LoginVM(Context context)
         {
             this.context = context;
@@ -95,7 +95,7 @@ namespace Bookstore
 
 
         #region Methods
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         private void Login()
         {
             UserLogin = string.Empty;

@@ -12,7 +12,7 @@ namespace Bookstore
     public class MainVM : NotifyPropertyChangeHandler
     {
         #region Properties
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         private readonly Context context;
         private User currentUser;
 
@@ -30,41 +30,48 @@ namespace Bookstore
 
 
         #region Inner view models
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public LoginVM LoginVM { get; private set; }
+        public SourceDataVM SourceDataVM { get; private set; }
 
         #endregion
 
 
         #region Commands
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public ICommand PageNavigationCommand { get; private set; }
 
         #endregion
 
 
         #region Constructor
-        //////////////////////////////////////////////////////////////////////////////////////////
+        /****************************************************************************************/
         public MainVM()
         {
             context = new Context();
 
             // set the start page
-            CurrentPage = "SourceDataView.xaml";
+            CurrentPage = "SourceDataPageView.xaml";
 
+            // init inner view models
             LoginVM = new LoginVM(context);
             LoginVM.OnSetCurrentUser += (user) => { currentUser = user; };
+            SourceDataVM = new SourceDataVM(context);
 
             InitCommands();
         }
         #endregion
 
 
+        #region Methods
+        /****************************************************************************************/
         private void InitCommands()
         {
             PageNavigationCommand = new RelayCommand<string>(p => CurrentPage = p);
         }
+     
 
+        #endregion
 
     }
 }
