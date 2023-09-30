@@ -1,0 +1,25 @@
+﻿<Window x:Class="Bookstore.View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bookstore.View"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        DataContext="{StaticResource mainViewModel}"
+        Title="Log in" Height="250" Width="230">
+
+    <Grid DataContext="{Binding LoginViewModel}">
+        <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Vertical" Height="140">
+                <TextBlock Text="Login:" FontSize="16"/>
+                <TextBox Text="{Binding UserLogin}" FontSize="16"/>
+                <TextBlock Text="Password:" FontSize="16"/>
+                <TextBox Text="{Binding UserPassword}" FontSize="16"/>
+                <TextBox Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="WrapWithOverflow" BorderThickness="0" FontSize="14"/>
+            </StackPanel>
+            <Button Content="Log in" Command="{Binding CheckUserDataCommand}" FontSize="16"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

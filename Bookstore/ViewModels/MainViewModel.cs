@@ -9,22 +9,22 @@ namespace Bookstore
 {
     public class MainViewModel : NotifyPropertyChangeHandler
     {
-        private readonly Context context = new Context();
+        private readonly Context context;
 
-        // mode to define app window content to be shown
-        private bool isAdminMode = false;
-        public bool IsAdminMode
+        // Inner view models
+        public LoginViewModel LoginViewModel { get; private set; }
+        
+
+       
+
+        public MainViewModel()
         {
-            get => isAdminMode;
-            set
-            {
-                if (isAdminMode != value)
-                {
-                    isAdminMode = value;
-                    OnPropertyChanged(nameof(IsAdminMode));
-                }
-            }
+            context = new Context();
+
+            LoginViewModel = new LoginViewModel(context);
         }
+
+        
 
     }
 }

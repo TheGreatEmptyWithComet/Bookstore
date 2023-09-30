@@ -7,31 +7,32 @@
         mc:Ignorable="d"
         DataContext="{StaticResource mainViewModel}"
         Title="MainView" Height="675" Width="1200">
-    <DockPanel>
-        <Grid DockPanel.Dock="Top">
+    <DockPanel >
+        <!-- Menu grid-->
+        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginViewModel}">
             <!-- Non-admin user menu -->
-            <Menu HorizontalAlignment="Right" Visibility="{Binding 1IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
-                <MenuItem Header="Log in"/>
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding !IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
+                <MenuItem Header="Log in" Command="{Binding LoginCommand}"/>
             </Menu>
 
             <!-- Admin user menu -->
             <!-- Main menu -->
-            <Menu HorizontalAlignment="Left" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
+            <Menu HorizontalAlignment="Left" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
                 <MenuItem Header="Books"/>
                 <MenuItem Header="Statistic"/>
                 <MenuItem Header="Source data"/>
             </Menu>
-            
+
             <!-- Log out menu -->
-            <Menu HorizontalAlignment="Right" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
-                <MenuItem Header="Log out"/>
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
+                <MenuItem Header="Log out" Command="{Binding LogoutCommand}"/>
             </Menu>
 
 
         </Grid>
         <Frame >
-            
+
         </Frame>
-        
+
     </DockPanel>
 </Window>
