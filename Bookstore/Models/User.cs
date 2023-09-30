@@ -8,10 +8,17 @@ using System.Threading.Tasks;
 namespace Bookstore
 {
 
-    [Index("Name", IsUnique = true)]
+    [Index("Login", IsUnique = true)]
     public class User
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Login { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+
+
+        // navigation properties
+        public virtual ICollection<Arrival> Arrivals { get; set; } = null!;
+        public virtual ICollection<Sale> Sales { get; set; } = null!;
+        public virtual ICollection<Reserve> Reserves { get; set; } = null!;
     }
 }
