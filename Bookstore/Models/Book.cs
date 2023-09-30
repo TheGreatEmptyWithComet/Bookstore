@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,14 +18,16 @@ namespace Bookstore
         public virtual Publisher Publisher { get; set; } = null!;
         public int PagesNumber { get; set; }
         public virtual Genre Genre { get; set; } = null!;
-        public DateOnly PublicationYear { get; set; }
+        public DateTime PublicationYear { get; set; }
         public Double SalesPrice { get; set; }
         public virtual Campaing? Campaing { get; set; }
         public bool? IsSequel { get; set; }
+        [ForeignKey("BookAsPrequel")]
         public virtual Book? PrequelBook { get; set; }
         public bool? IsNewArrival { get; set; }
         public virtual Customer? ReservedForCustomer { get; set; }
         // reference to the origin book when book is reserved
+        [ForeignKey("BookAsOriginReference")]
         public virtual Book? OriginBook { get; set; }
 
 

@@ -19,6 +19,6 @@ namespace Bookstore
         // navigation properties
         public virtual ICollection<Arrival> Arrivals { get; set; } = null!;
         public virtual ICollection<Sale> Sales { get; set; } = null!;
-        public virtual ICollection<Reserve> Reserves { get; set; } = null!;
+        public virtual ICollection<Reserve> Reserves { get; set; } = null!; 
     }
 }
