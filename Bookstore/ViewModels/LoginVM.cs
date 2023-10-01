@@ -26,13 +26,6 @@ namespace Bookstore
         private readonly Context context;
         private LoginWindow loginWindow;
 
-        // DB row data
-        private List<User> allUsers;
-        // Data for WPF
-        public ObservableCollection<UserVM> Users { get { return new ObservableCollection<UserVM>(allUsers.Select(i => new UserVM(i))); } }
-
-        public UserVM CurrentUser { get; private set; }
-
         // Mode to define app window content to be shown
         private bool isAdminMode = false;
         public bool IsAdminMode
@@ -84,7 +77,7 @@ namespace Bookstore
             // !!! temporary assignment
             isAdminMode = true;
 
-            LoadDataFromDB();
+            //LoadDataFromDB();
 
             LoginCommand = new RelayCommand(Login);
             CheckUserDataCommand = new RelayCommand(CheckUserData);
@@ -107,8 +100,7 @@ namespace Bookstore
             if (loginWindow.ShowDialog() == true)
             {
                 // login is unique value and user existance is checked in CheckUserData() method
-                CurrentUser = Users.Where(user => user.Login == UserLogin).FirstOrDefault()!;
-                User currentUser = allUsers.Where(user => user.Login == UserLogin).FirstOrDefault()!;
+                User currentUser = context.Users.Where(user => user.Login == UserLogin).FirstOrDefault()!;
                 OnSetCurrentUser?.Invoke(currentUser);
                 IsAdminMode = true;
             }
@@ -116,13 +108,13 @@ namespace Bookstore
         private void CheckUserData()
         {
             // check login
-            if (!allUsers.Any(user => user.Login == UserLogin))
+            if (!context.Users.Any(user => user.Login == UserLogin))
             {
                 ErrorMessage = "No such a login exists";
                 return;
             }
             // password
-            else if (!allUsers.Any(user => user.Login == UserLogin && user.Password == UserPassword))
+            else if (!context.Users.Any(user => user.Login == UserLogin && user.Password == UserPassword))
             {
                 ErrorMessage = "Wrong passsword";
                 return;
@@ -133,12 +125,6 @@ namespace Bookstore
         private void Logout()
         {
             IsAdminMode = false;
-        }
-
-        public void LoadDataFromDB()
-        {
-            allUsers = context.Users.ToList();
-            NotifyPropertyChanged(nameof(Users));
         }
 
         #endregion

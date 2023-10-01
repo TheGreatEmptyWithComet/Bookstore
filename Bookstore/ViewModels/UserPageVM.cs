@@ -84,6 +84,7 @@ namespace Bookstore
         public UserPageVM(Context context)
         {
             this.context = context;
+            LoadDataFromDB();
             InitCommands();
         }
         #endregion
@@ -147,20 +148,27 @@ namespace Bookstore
         }
         private void DeleteUser()
         {
-            // remove user
-            context.Remove(SelectedUser.Model);
-            allUsers.Remove(SelectedUser.Model);
-
-            // update db
-            SaveChanges();
+            // remove user except last
+            if (Users.Count > 1)
+            {
+                context.Remove(SelectedUser.Model);
+                allUsers.Remove(SelectedUser.Model);
+                
+                // update db
+                SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("The last user can't be deleted");
+            }
         }
         private void CheckData()
         {
             // check login
-            if (!allUsers.Any(user => user.Login == CurrentUser.Login))
+            if (allUsers.Any(user => user.Login == CurrentUser.Login))
             {
                 // Allow save login in a case it wasn't changed
-                if (!(editDataMode && CurrentUser.Login == SelectedUser.Login))
+                if (!(editDataMode && CurrentUser.Login==SelectedUser.Login))
                 {
                     ErrorMessage = "Such a login is already exists";
                     return;

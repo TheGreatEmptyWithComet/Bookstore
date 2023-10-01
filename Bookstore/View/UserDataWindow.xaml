@@ -14,14 +14,14 @@
             <!-- Data -->
             <StackPanel Orientation="Vertical" Height="170">
                 <TextBlock Text="Login:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBox Text="{Binding UserLogin}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <TextBox Text="{Binding SourceDataVM.UserPageVM.CurrentUser.Login}" Style="{DynamicResource Style_WindowTextBox}"/>
                 <TextBlock Text="Password:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBox Text="{Binding UserPassword}" Style="{DynamicResource Style_WindowTextBox}"/>
-                <TextBlock Text="{Binding ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
+                <TextBox Text="{Binding SourceDataVM.UserPageVM.CurrentUser.Password}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <TextBlock Text="{Binding  SourceDataVM.UserPageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
             </StackPanel>
 
             <!-- Command button -->
-            <Button Content="Save" Command="{Binding CheckUserDataCommand}" FontSize="16"/>
+            <Button Content="Save" Command="{Binding SourceDataVM.UserPageVM.SaveCommand}" FontSize="16"/>
         </StackPanel>
     </Grid>
 </Window>

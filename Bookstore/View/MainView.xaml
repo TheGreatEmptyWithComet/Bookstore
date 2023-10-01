@@ -9,23 +9,23 @@
         Title="MainView" Height="675" Width="1200">
     <DockPanel >
         <!-- Menu grid-->
-        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginVM}">
+        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginVM}" Background="LightBlue">
             <!-- Non-admin user menu -->
-            <Menu HorizontalAlignment="Right"  Visibility="{Binding !IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
-                <MenuItem Header="Log in" Command="{Binding LoginCommand}"/>
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding !IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Log in" Command="{Binding LoginCommand}" Height="30" />
             </Menu>
 
             <!-- Admin user menu -->
             <!-- Main menu -->
-            <Menu HorizontalAlignment="Left" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
-                <MenuItem Header="Books"/>
-                <MenuItem Header="Statistic"/>
-                <MenuItem Header="Source data"/>
+            <Menu HorizontalAlignment="Left" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Books"  Height="30"/>
+                <MenuItem Header="Statistic" Height="30" />
+                <MenuItem Header="Source data" Height="30" />
             </Menu>
 
             <!-- Log out menu -->
-            <Menu HorizontalAlignment="Right"  Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16">
-                <MenuItem Header="Log out" Command="{Binding LogoutCommand}"/>
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Log out" Command="{Binding LogoutCommand}" Height="30" />
             </Menu>
 
 
