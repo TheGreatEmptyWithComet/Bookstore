@@ -92,8 +92,8 @@ namespace Bookstore
         }
         private void AddNewReserve()
         {
-            // Create new user
-            Reserve newReserve = new Reserve();
+            // Create new reserve
+            Reserve newReserve = new Reserve() { DateTime = DateTime.Now }; 
             CurrentReserve = new ReserveVM(newReserve);
             ErrorMessage = string.Empty;
 
@@ -112,7 +112,7 @@ namespace Bookstore
         {
             editDataMode = true;
 
-            // Create edited user
+            // Create edited reserve
             Reserve editedReserve = new Reserve()
             {
                 Book = SelectedReserve.Model.Book,

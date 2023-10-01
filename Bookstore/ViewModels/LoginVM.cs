@@ -18,6 +18,9 @@ namespace Bookstore
         /****************************************************************************************/
         public delegate void SetCurrentUser(User user);
         public event SetCurrentUser OnSetCurrentUser;
+
+        public delegate void NotifyLogout();
+        public event NotifyLogout OnNotifyLogout;
         #endregion
 
 
@@ -125,6 +128,7 @@ namespace Bookstore
         private void Logout()
         {
             IsAdminMode = false;
+            OnNotifyLogout?.Invoke();
         }
 
         #endregion

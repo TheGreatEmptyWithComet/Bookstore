@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Bookstore.View
 {
     /// <summary>
-    /// Interaction logic for UserPageView.xaml
+    /// Interaction logic for CustomerPageView.xaml
     /// </summary>
-    public partial class UserPageView : Page
+    public partial class CustomersPageView : Page
     {
-        public UserPageView()
+        public CustomersPageView()
         {
             InitializeComponent();
         }

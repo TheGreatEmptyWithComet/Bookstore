@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
-        Title="CampaingDataWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterOwner"
+        DataContext="{StaticResource mainVM}"
+        Title="Campaing" Height="260" Width="230">
+
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <!-- Data -->
+            <StackPanel Orientation="Vertical" Height="170">
+                <!-- Name -->
+                <TextBlock Text="Name:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.CampaingPageVM.CurrentCampaing.Name}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Discount -->
+                <TextBlock Text="Discount percent:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.CampaingPageVM.CurrentCampaing.DiscountPercent}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Error message -->
+                <TextBlock Text="{Binding  SourceDataVM.CampaingPageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
+            </StackPanel>
+
+            <!-- Command button -->
+            <Button Content="Save" Command="{Binding SourceDataVM.CampaingPageVM.SaveCommand}" FontSize="16"/>
+        </StackPanel>
     </Grid>
 </Window>

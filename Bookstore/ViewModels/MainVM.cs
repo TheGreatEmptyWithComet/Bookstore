@@ -33,7 +33,7 @@ namespace Bookstore
         /****************************************************************************************/
         public LoginVM LoginVM { get; private set; }
         public SourceDataVM SourceDataVM { get; private set; }
-        public BooksVM BooksVM { get; private set; }
+        public BookPageVM BookPageVM { get; private set; }
 
 
         #endregion
@@ -53,13 +53,16 @@ namespace Bookstore
             context = new Context();
 
             // set the start page
-            CurrentPage = "SourceDataPageView.xaml";
+            CurrentPage = "BooksPageView.xaml";
 
             // init inner view models
             LoginVM = new LoginVM(context);
             LoginVM.OnSetCurrentUser += (user) => { currentUser = user; };
+            // On logout set the current page to the one that is available to unregistered users
+            LoginVM.OnNotifyLogout += () => { CurrentPage = "BooksPageView.xaml"; };
+            
             SourceDataVM = new SourceDataVM(context);
-            BooksVM = new BooksVM(context);
+            BookPageVM = new BookPageVM(context);
 
             InitCommands();
         }

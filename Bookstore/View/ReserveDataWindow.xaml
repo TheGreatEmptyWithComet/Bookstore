@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
-        Title="ReserveDataWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterOwner"
+        DataContext="{StaticResource mainVM}"
+        Title="Reserve" Height="460" Width="300">
+
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <!-- Data -->
+            <StackPanel Orientation="Vertical" Height="390">
+                <!-- Book -->
+                <TextBlock Text="Book:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <ComboBox ItemsSource="{Binding BookPageVM.Books}" SelectedIndex="0" SelectedItem="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book}" Margin="0 0 0 10">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text=", "/>
+                                <TextBlock Text="{Binding Author.FirstName}"/>
+                                <TextBlock Text="{Binding Author.LastName}"/>
+                                <TextBlock Text=", "/>
+                                <TextBlock Text="{Binding PublicationYear}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <!-- Date -->
+                <TextBlock Text="Date:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <Calendar DisplayDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" SelectedDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" Margin="0 0 0 10"/>
+
+                <!-- Amount -->
+                <TextBlock Text="Amount:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Amount}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Error message -->
+                <TextBlock Text="{Binding  SourceDataVM.ReservePageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
+            </StackPanel>
+
+            <!-- Command button -->
+            <Button Content="Save" Command="{Binding SourceDataVM.ReservePageVM.SaveCommand}" FontSize="16"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -92,8 +92,8 @@ namespace Bookstore
         }
         private void AddNewArrival()
         {
-            // Create new user
-            Arrival newArrival = new Arrival();
+            // Create new arrival
+            Arrival newArrival = new Arrival() { DateTime = DateTime.Now };
             CurrentArrival = new ArrivalVM(newArrival);
             ErrorMessage = string.Empty;
 
@@ -112,7 +112,7 @@ namespace Bookstore
         {
             editDataMode = true;
 
-            // Create edited user
+            // Create edited arrival
             Arrival editedArrival = new Arrival()
             {
                 Book = SelectedArrival.Model.Book,
@@ -153,7 +153,7 @@ namespace Bookstore
         private void CheckData()
         {
             // check amount
-            if (CurrentArrival.Amount<=0)
+            if (CurrentArrival.Amount <= 0)
             {
                 ErrorMessage = "Amount must be bigger than 0";
                 return;

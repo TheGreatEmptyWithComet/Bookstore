@@ -56,7 +56,7 @@ namespace Bookstore
             this.context = context;
 
             // Set the start page
-            CurrentPage = "UserPageView.xaml";
+            CurrentPage = "AuthorsPageView.xaml";
 
             // Init inner view models
             UserPageVM = new UserPageVM(context);

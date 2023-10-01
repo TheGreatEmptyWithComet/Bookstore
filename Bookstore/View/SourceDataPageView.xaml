@@ -11,22 +11,22 @@
 
     <DockPanel>
         <!-- Left menu -->
-        <Menu Width="130" HorizontalAlignment="Left" DockPanel.Dock="Left" FontSize="16" Background="#FFD3EDEA">
+        <Menu Width="130" HorizontalAlignment="Left" DockPanel.Dock="Left" FontSize="16" Background="#FFD3EDEA" DataContext="{Binding SourceDataVM}">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
 
-            <MenuItem Header="Authors" Padding="3"/>
-            <MenuItem Header="Publishers" Padding="3"/>
-            <MenuItem Header="Genres" Padding="3"/>
-            <MenuItem Header="Campaings" Padding="3"/>
-            <MenuItem Header="Customers" Padding="3"/>
-            <MenuItem Header="Arrivals" Padding="3"/>
-            <MenuItem Header="Sales"  Padding="3"/>
-            <MenuItem Header="Reserves" Padding="3"/>
-            <MenuItem Header="Users" Padding="3"/>
+            <MenuItem Header="Authors" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="AuthorsPageView.xaml"/>
+            <MenuItem Header="Publishers" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="PublishersPageView.xaml"/>
+            <MenuItem Header="Genres" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="GenresPageView.xaml"/>
+            <MenuItem Header="Campaings" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="CampaingsPageView.xaml"/>
+            <MenuItem Header="Customers" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="CustomersPageView.xaml"/>
+            <MenuItem Header="Arrivals" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="ArrivalsPageView.xaml"/>
+            <MenuItem Header="Sales"  Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="SalesPageView.xaml"/>
+            <MenuItem Header="Reserves" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="ReservesPageView.xaml"/>
+            <MenuItem Header="Users" Padding="5 3 3 3" Command="{Binding PageNavigationCommand}" CommandParameter="UsersPageView.xaml"/>
         </Menu>
 
         <Frame Source="{Binding SourceDataVM.CurrentPage}" />

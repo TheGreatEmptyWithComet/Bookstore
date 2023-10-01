@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Bookstore
 {
-    public class BooksVM : NotifyPropertyChangeHandler
+    public class BookPageVM : NotifyPropertyChangeHandler
     {
         #region Properties
         /****************************************************************************************/
@@ -72,7 +72,7 @@ namespace Bookstore
 
         #region Constructor
         /****************************************************************************************/
-        public BooksVM(Context context)
+        public BookPageVM(Context context)
         {
             this.context = context;
             LoadDataFromDB();
@@ -93,7 +93,7 @@ namespace Bookstore
         private void AddNewBook()
         {
             // Create new user
-            Book newBook = new Book();
+            Book newBook = new Book() {PublicationYear=DateTime.Now };
             CurrentBook = new BookVM(newBook);
             ErrorMessage = string.Empty;
 

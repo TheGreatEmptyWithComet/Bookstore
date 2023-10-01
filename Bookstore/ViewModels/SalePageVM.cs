@@ -92,8 +92,8 @@ namespace Bookstore
         }
         private void AddNewSale()
         {
-            // Create new user
-            Sale newSale = new Sale();
+            // Create new sale
+            Sale newSale = new Sale() { DateTime = DateTime.Now };
             CurrentSale = new SaleVM(newSale);
             ErrorMessage = string.Empty;
 
@@ -112,7 +112,7 @@ namespace Bookstore
         {
             editDataMode = true;
 
-            // Create edited user
+            // Create edited sale
             Sale editedSale = new Sale()
             {
                 Book = SelectedSale.Model.Book,

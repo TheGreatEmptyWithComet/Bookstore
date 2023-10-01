@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
-        Title="GenreDataWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterOwner"
+        DataContext="{StaticResource mainVM}"
+        Title="Genre" Height="200" Width="230">
+
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <!-- Data -->
+            <StackPanel Orientation="Vertical" Height="120">
+                <!-- Name -->
+                <TextBlock Text="Name:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.GenrePageVM.CurrentGenre.Name}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Error message -->
+                <TextBlock Text="{Binding  SourceDataVM.GenrePageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
+            </StackPanel>
+
+            <!-- Command button -->
+            <Button Content="Save" Command="{Binding SourceDataVM.GenrePageVM.SaveCommand}" FontSize="16"/>
+        </StackPanel>
     </Grid>
 </Window>

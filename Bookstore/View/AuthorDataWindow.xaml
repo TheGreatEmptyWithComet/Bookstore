@@ -12,21 +12,25 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
-            <StackPanel Orientation="Vertical" Height="170">
-                <!-- FirstName -->
-                <TextBlock Text="FirstName:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBox Text="{Binding SourceDataVM.AuthorPageVM.CurrentUser.Login}" Style="{DynamicResource Style_WindowTextBox}"/>
+            <StackPanel Orientation="Vertical" Height="190">
+                <!-- First Name -->
+                <TextBlock Text="First name:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.AuthorPageVM.CurrentAuthor.FirstName}" Style="{DynamicResource Style_WindowTextBox}"/>
 
-                <!-- Password -->
-                <TextBlock Text="Password:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBox Text="{Binding SourceDataVM.UserPageVM.CurrentUser.Password}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <!-- Last Name -->
+                <TextBlock Text="Last name:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.AuthorPageVM.CurrentAuthor.LastName}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Middle Name -->
+                <TextBlock Text="Middle name:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.AuthorPageVM.CurrentAuthor.MiddleName}" Style="{DynamicResource Style_WindowTextBox}"/>
 
                 <!-- Error message -->
-                <TextBlock Text="{Binding  SourceDataVM.UserPageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
+                <TextBlock Text="{Binding  SourceDataVM.AuthorPageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />
             </StackPanel>
 
             <!-- Command button -->
-            <Button Content="Save" Command="{Binding SourceDataVM.UserPageVM.SaveCommand}" FontSize="16"/>
+            <Button Content="Save" Command="{Binding SourceDataVM.AuthorPageVM.SaveCommand}" FontSize="16"/>
         </StackPanel>
     </Grid>
 </Window>

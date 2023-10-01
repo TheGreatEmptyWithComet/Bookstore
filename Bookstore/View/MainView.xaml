@@ -9,29 +9,29 @@
         Title="MainView" Height="675" Width="1200">
     <DockPanel >
         <!-- Menu grid-->
-        <Grid DockPanel.Dock="Top" DataContext="{Binding LoginVM}" Background="LightBlue">
+        <Grid DockPanel.Dock="Top" Background="LightBlue">
             <!-- Non-admin user menu -->
-            <Menu HorizontalAlignment="Right"  Visibility="{Binding !IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
-                <MenuItem Header="Log in" Command="{Binding LoginCommand}" Height="30" />
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding !LoginVM.IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Log in" Command="{Binding LoginVM.LoginCommand}" Height="30" />
             </Menu>
 
             <!-- Admin user menu -->
             <!-- Main menu -->
-            <Menu HorizontalAlignment="Left" Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
-                <MenuItem Header="Books"  Height="30"/>
-                <MenuItem Header="Statistic" Height="30" />
-                <MenuItem Header="Source data" Height="30" />
+            <Menu HorizontalAlignment="Left" Visibility="{Binding LoginVM.IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Books"  Height="30" Command="{Binding PageNavigationCommand}" CommandParameter="BooksPageView.xaml"/>
+                <MenuItem Header="Statistic" Height="30" Command="{Binding PageNavigationCommand}" CommandParameter="StatisticPageView.xaml"/>
+                <MenuItem Header="Source data" Height="30" Command="{Binding PageNavigationCommand}" CommandParameter="SourceDataPageView.xaml"/>
             </Menu>
 
             <!-- Log out menu -->
-            <Menu HorizontalAlignment="Right"  Visibility="{Binding IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
-                <MenuItem Header="Log out" Command="{Binding LogoutCommand}" Height="30" />
+            <Menu HorizontalAlignment="Right"  Visibility="{Binding LoginVM.IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}" FontSize="16" Background="LightBlue" FontWeight="Bold">
+                <MenuItem Header="Log out" Command="{Binding LoginVM.LogoutCommand}" Height="30" />
             </Menu>
 
 
         </Grid>
         
-        <Frame Source="{Binding CurrentPage}"/>
+        <Frame Source="{Binding CurrentPage}" NavigationUIVisibility="Hidden"/>
 
     </DockPanel>
 </Window>
