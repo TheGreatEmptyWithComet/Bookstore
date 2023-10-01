@@ -30,5 +30,15 @@ namespace Bookstore
         {
             Model = genre;
         }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not GenreVM genreVM || genreVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as GenreVM)!.Model.Id);
+        }
     }
 }

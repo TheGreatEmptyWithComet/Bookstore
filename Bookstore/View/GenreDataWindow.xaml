@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="Genre" Height="200" Width="230">
+        Title="Genre" Height="210" Width="230">
 
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
-            <StackPanel Orientation="Vertical" Height="120">
+            <StackPanel Orientation="Vertical" Height="110">
                 <!-- Name -->
                 <TextBlock Text="Name:" Style="{DynamicResource Style_WindowTextBlock}"/>
                 <TextBox Text="{Binding SourceDataVM.GenrePageVM.CurrentGenre.Name}" Style="{DynamicResource Style_WindowTextBox}"/>

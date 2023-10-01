@@ -170,9 +170,20 @@ namespace Bookstore
         }
 
 
+
         public BookVM(Book book)
         {
             Model = book;
+        }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not BookVM bookVM || bookVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as BookVM)!.Model.Id);
         }
     }
 }

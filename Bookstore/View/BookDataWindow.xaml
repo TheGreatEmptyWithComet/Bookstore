@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="Book" Height="600" Width="550">
+        Title="Book" Height="650" Width="550">
 
     <Window.Resources>
         <DataTemplate x:Key="ItemTemplate_BookComboBox">
@@ -46,19 +46,30 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Author:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <ComboBox ItemsSource="{Binding  SourceDataVM.AuthorPageVM.Authors}" 
+                    <ComboBox ItemsSource="{Binding SourceDataVM.AuthorPageVM.Authors}" 
                               SelectedIndex="0" 
                               SelectedItem="{Binding BookPageVM.CurrentBook.Author}" 
                               Grid.Column="1"
-                              Style="{DynamicResource Style_ComboBoxBase}"/>
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding FirstName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding LastName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding MiddleName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <!-- Publisher -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="114*"/>
-                        <ColumnDefinition Width="55*"/>
-                        <ColumnDefinition Width="211*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="70*"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Publisher:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0" Margin="0,0,0,5"/>
@@ -66,7 +77,15 @@
                               SelectedIndex="0" 
                               SelectedItem="{Binding BookPageVM.CurrentBook.Publisher}" 
                               Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}" Grid.ColumnSpan="2"/>
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <!-- Pages Number -->
@@ -92,7 +111,15 @@
                               SelectedIndex="0" 
                               SelectedItem="{Binding BookPageVM.CurrentBook.Genre}" 
                               Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}"/>
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <!-- Publication Year -->
@@ -103,11 +130,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Publication year:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <Calendar DisplayDate="{Binding BookPageVM.CurrentBook.PublicationYear}" 
-                              SelectedDate="{Binding BookPageVM.CurrentBook.PublicationYear}" 
-                              Margin="0 0 0 10" 
-                              DisplayMode="Decade" 
-                              Grid.Column="1"/>
+                    <DatePicker DisplayDate="{Binding BookPageVM.CurrentBook.PublicationYear}" SelectedDate="{Binding BookPageVM.CurrentBook.PublicationYear}" Margin="0 0 0 15" SelectedDateFormat="Short" FontSize="14" Grid.Column="1" />
                 </Grid>
 
                 <!-- Sales price -->
@@ -132,7 +155,17 @@
                     <ComboBox ItemsSource="{Binding  SourceDataVM.CampaingPageVM.Campaings}" 
                               SelectedItem="{Binding BookPageVM.CurrentBook.Campaing}" 
                               Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}"/>
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text=", discount = "/>
+                                    <TextBlock Text="{Binding DiscountPercent}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <!-- Is sequel -->
@@ -143,7 +176,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Is sequel:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <CheckBox IsChecked="{Binding BookPageVM.CurrentBook.IsSequel}" Grid.Column="1"/>
+                    <CheckBox IsChecked="{Binding BookPageVM.CurrentBook.IsSequel, Mode=TwoWay}" Grid.Column="1"/>
                 </Grid>
 
                 <!-- Prequel Book -->
@@ -168,7 +201,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Is new arrival:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <CheckBox IsChecked="{Binding BookPageVM.CurrentBook.IsNewArrival}" Grid.Column="1"/>
+                    <CheckBox IsChecked="{Binding BookPageVM.CurrentBook.IsNewArrival, Mode=TwoWay}" Grid.Column="1"/>
                 </Grid>
 
                 <!-- Reserved For Customer -->
@@ -182,7 +215,18 @@
                     <ComboBox ItemsSource="{Binding  SourceDataVM.CustomerPageVM.Customers}" 
                               SelectedItem="{Binding BookPageVM.CurrentBook.ReservedForCustomer}" 
                               Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}"/>
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="phone #"/>
+                                    <TextBlock Text="{Binding PhoneNumber}"/>
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <!-- Error message -->

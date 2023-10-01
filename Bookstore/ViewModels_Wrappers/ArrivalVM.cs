@@ -59,7 +59,18 @@ namespace Bookstore
                 }
             }
         }
-
+        public UserVM User
+        {
+            get => new UserVM(Model.User);
+            set
+            {
+                if (value != null && value.Model != Model.User)
+                {
+                    Model.User = value.Model;
+                    NotifyPropertyChanged(nameof(User));
+                }
+            }
+        }
 
         public ArrivalVM(Arrival arrival)
         {

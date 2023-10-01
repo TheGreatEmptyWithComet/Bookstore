@@ -5,11 +5,55 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Bookstore.View"
       mc:Ignorable="d" 
-      Background="Ivory"
+      DataContext="{StaticResource mainVM}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CampaingsPageView">
 
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <!-- Page info header -->
+        <TextBlock Text="Campaings" Style="{DynamicResource Style_WindowTextBlock}" DockPanel.Dock="Top" Margin="5 5 0 0"/>
+
+        <!-- Command buttons -->
+        <StackPanel Width="100" DockPanel.Dock="Right" Orientation="Vertical">
+            <!-- New button -->
+            <Button Command="{Binding SourceDataVM.CampaingPageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}">Add</Button>
+
+            <!-- Edit button -->
+            <Button Command="{Binding SourceDataVM.CampaingPageVM.EditCommand}" Content="Edit">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
+                        <Setter Property="IsEnabled" Value="True"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Delete button -->
+            <Button Command="{Binding SourceDataVM.CampaingPageVM.DeleteCommand}" Content="Delete">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
+                        <Setter Property="IsEnabled" Value="True"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+        <!-- Data table -->
+        <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding SourceDataVM.CampaingPageVM.Campaings}" SelectedItem="{Binding SourceDataVM.CampaingPageVM.SelectedCampaing}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Discount percent" Binding="{Binding Path=DiscountPercent}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
 </Page>

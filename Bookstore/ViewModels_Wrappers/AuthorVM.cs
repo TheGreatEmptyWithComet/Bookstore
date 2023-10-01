@@ -50,9 +50,20 @@ namespace Bookstore
         }
 
 
+        
         public AuthorVM(Author author)
         {
             Model = author;
+        }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not AuthorVM authorVM || authorVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as AuthorVM)!.Model.Id);
         }
     }
 }

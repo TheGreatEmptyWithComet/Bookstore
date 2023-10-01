@@ -42,5 +42,15 @@ namespace Bookstore
         {
             Model = campaing;
         }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not CampaingVM campaingVM || campaingVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as CampaingVM)!.Model.Id);
+        }
     }
 }

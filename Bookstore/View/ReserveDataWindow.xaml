@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="Reserve" Height="460" Width="300">
+        Title="Reserve" Height="370" Width="300">
 
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
-            <StackPanel Orientation="Vertical" Height="390">
+            <StackPanel Orientation="Vertical" Height="270">
                 <!-- Book -->
                 <TextBlock Text="Book:" Style="{DynamicResource Style_WindowTextBlock}"/>
                 <ComboBox ItemsSource="{Binding BookPageVM.Books}" SelectedIndex="0" SelectedItem="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book}" Margin="0 0 0 10">
@@ -32,7 +32,7 @@
 
                 <!-- Date -->
                 <TextBlock Text="Date:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <Calendar DisplayDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" SelectedDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" Margin="0 0 0 10"/>
+                <DatePicker DisplayDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" SelectedDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" Margin="0 0 0 10" SelectedDateFormat="Short" FontSize="14"/>
 
                 <!-- Amount -->
                 <TextBlock Text="Amount:" Style="{DynamicResource Style_WindowTextBlock}"/>

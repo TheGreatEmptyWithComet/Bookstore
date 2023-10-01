@@ -25,9 +25,20 @@ namespace Bookstore
             }
         }
 
+
         public PublisherVM(Publisher publisher)
         {
             Model = publisher;
+        }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not PublisherVM publisherVM || publisherVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as PublisherVM)!.Model.Id);
         }
     }
 }

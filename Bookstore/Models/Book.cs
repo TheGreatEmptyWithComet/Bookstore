@@ -21,10 +21,10 @@ namespace Bookstore
         public DateTime PublicationYear { get; set; }
         public double SalesPrice { get; set; }
         public virtual Campaing? Campaing { get; set; }
-        public bool? IsSequel { get; set; }
+        public bool? IsSequel { get; set; } = false;
         [ForeignKey("BookAsPrequel")]
         public virtual Book? PrequelBook { get; set; }
-        public bool? IsNewArrival { get; set; }
+        public bool? IsNewArrival { get; set; } = false;
         public virtual Customer? ReservedForCustomer { get; set; }
         // reference to the origin book when book is reserved
         [ForeignKey("BookAsOriginReference")]

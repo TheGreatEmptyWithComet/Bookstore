@@ -159,7 +159,7 @@ namespace Bookstore
             // check last name
             else if (String.IsNullOrEmpty(CurrentAuthor.LastName))
             {
-                ErrorMessage = "Password must not be empty";
+                ErrorMessage = "Last name must not be empty";
                 return;
             }
             authorDataWindow.DialogResult = true;

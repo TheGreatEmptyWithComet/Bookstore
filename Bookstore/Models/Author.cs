@@ -15,7 +15,7 @@ namespace Bookstore
         [StringLength(100)]
         public string LastName { get; set; } = string.Empty;
         [StringLength(100)]
-        public string? MiddleName { get; set; }
+        public string? MiddleName { get; set; } = string.Empty;
 
 
         // navigation property

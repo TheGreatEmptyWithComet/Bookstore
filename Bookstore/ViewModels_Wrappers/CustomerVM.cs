@@ -42,5 +42,15 @@ namespace Bookstore
         {
             Model = customer;
         }
+
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not CustomerVM customerVM || customerVM.Model == null)
+            {
+                return false;
+            }
+            return Model.Id.Equals((obj as CustomerVM)!.Model.Id);
+        }
     }
 }
