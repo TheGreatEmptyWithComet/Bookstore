@@ -30,6 +30,14 @@ namespace Bookstore
         #region Inner view models
         /****************************************************************************************/
         public UserPageVM UserPageVM { get; private set; }
+        public AuthorPageVM AuthorPageVM { get; private set; }
+        public PublisherPageVM PublisherPageVM { get; private set; }
+        public GenrePageVM GenrePageVM { get; private set; }
+        public CampaingPageVM CampaingPageVM { get; private set; }
+        public CustomerPageVM CustomerPageVM { get; private set; }
+        public ArrivalPageVM ArrivalPageVM { get; private set; }
+        public SalePageVM SalePageVM { get; private set; }
+        public ReservePageVM ReservePageVM { get; private set; }
 
         #endregion
 
@@ -52,6 +60,14 @@ namespace Bookstore
 
             // Init inner view models
             UserPageVM = new UserPageVM(context);
+            AuthorPageVM = new AuthorPageVM(context);
+            PublisherPageVM = new PublisherPageVM(context);
+            GenrePageVM = new GenrePageVM(context);
+            CampaingPageVM = new CampaingPageVM(context);
+            CustomerPageVM = new CustomerPageVM(context);
+            ArrivalPageVM = new ArrivalPageVM(context);
+            SalePageVM = new SalePageVM(context);
+            ReservePageVM = new ReservePageVM(context);
 
             InitCommands();
         }

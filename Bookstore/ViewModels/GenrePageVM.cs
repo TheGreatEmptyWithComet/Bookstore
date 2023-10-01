@@ -1,54 +1,45 @@
 ﻿using Bookstore.View;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using static Bookstore.LoginVM;
+using System.Windows;
 
 namespace Bookstore
 {
-    public class UserPageVM : NotifyPropertyChangeHandler
+    public class GenrePageVM : NotifyPropertyChangeHandler
     {
-        #region Delegates and events
-        /****************************************************************************************/
-        //public delegate void NotifyUserChanged(UserPageVM userPageViewModel);
-        //public event NotifyUserChanged OnNotifyUserChanged;
-        #endregion
-
-
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
         // variable is used to prevent some data checking while they are edited
         private bool editDataMode = false;
-        private UserDataWindow userDataWindow;
+        private GenreDataWindow genreDataWindow;
         // View model for window binding
-        public UserVM CurrentUser { get; private set; }
+        public GenreVM CurrentGenre { get; private set; }
 
         // DB row data
-        private List<User> allUsers;
+        private List<Genre> allGenres;
         // Data for WPF
-        public ObservableCollection<UserVM> Users { get { return new ObservableCollection<UserVM>(allUsers.Select(i => new UserVM(i))); } }
+        public ObservableCollection<GenreVM> Genres { get { return new ObservableCollection<GenreVM>(allGenres.Select(i => new GenreVM(i))); } }
 
-        private UserVM selectedUser;
-        public UserVM SelectedUser
+        private GenreVM selectedGenre;
+        public GenreVM SelectedGenre
         {
             get
             {
-                return selectedUser;
+                return selectedGenre;
             }
             set
             {
-                if (selectedUser != value)
+                if (selectedGenre != value)
                 {
-                    selectedUser = value;
-                    NotifyPropertyChanged(nameof(SelectedUser));
+                    selectedGenre = value;
+                    NotifyPropertyChanged(nameof(SelectedGenre));
                 }
             }
         }
@@ -81,7 +72,7 @@ namespace Bookstore
 
         #region Constructor
         /****************************************************************************************/
-        public UserPageVM(Context context)
+        public GenrePageVM(Context context)
         {
             this.context = context;
             LoadDataFromDB();
@@ -94,51 +85,49 @@ namespace Bookstore
         /****************************************************************************************/
         private void InitCommands()
         {
-            AddCommand = new RelayCommand(AddNewUser);
+            AddCommand = new RelayCommand(AddNewGenre);
             SaveCommand = new RelayCommand(CheckData);
-            EditCommand = new RelayCommand(EditUser);
-            DeleteCommand = new RelayCommand(DeleteUser);
+            EditCommand = new RelayCommand(EditGenre);
+            DeleteCommand = new RelayCommand(DeleteGenre);
         }
-        private void AddNewUser()
+        private void AddNewGenre()
         {
             // Create new user
-            User newUser = new User();
-            CurrentUser = new UserVM(newUser);
+            Genre newGenre = new Genre();
+            CurrentGenre = new GenreVM(newGenre);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            genreDataWindow = new GenreDataWindow();
+            genreDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (genreDataWindow.ShowDialog() == true)
             {
-                context.Add(newUser);
-                allUsers.Add(newUser);
+                context.Add(newGenre);
+                allGenres.Add(newGenre);
                 SaveChanges();
             }
         }
-        private void EditUser()
+        private void EditGenre()
         {
             editDataMode = true;
 
             // Create edited user
-            User editedUser = new User()
+            Genre editedGenre = new Genre()
             {
-                Login = SelectedUser.Login,
-                Password = SelectedUser.Password
+                Name = SelectedGenre.Name
             };
-            CurrentUser = new UserVM(editedUser);
+            CurrentGenre = new GenreVM(editedGenre);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            genreDataWindow = new GenreDataWindow();
+            genreDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (genreDataWindow.ShowDialog() == true)
             {
                 // change data
-                SelectedUser.Login = editedUser.Login;
-                SelectedUser.Password = editedUser.Password;
+                SelectedGenre.Name = editedGenre.Name;
 
                 editDataMode = false;
 
@@ -146,53 +135,41 @@ namespace Bookstore
                 SaveChanges();
             }
         }
-        private void DeleteUser()
+        private void DeleteGenre()
         {
-            // remove user except last
-            if (Users.Count > 1)
-            {
-                context.Remove(SelectedUser.Model);
-                allUsers.Remove(SelectedUser.Model);
-                
-                // update db
-                SaveChanges();
-            }
-            else
-            {
-                MessageBox.Show("The last user can't be deleted");
-            }
+            // remove record
+            context.Remove(SelectedGenre.Model);
+            allGenres.Remove(SelectedGenre.Model);
+
+            // update db
+            SaveChanges();
         }
         private void CheckData()
         {
-            // check login
-            if (allUsers.Any(user => user.Login == CurrentUser.Login))
+            // check name if it is unique
+            if (allGenres.Any(genre => genre.Name == CurrentGenre.Name))
             {
-                // Allow save login in a case it wasn't changed
-                if (!(editDataMode && CurrentUser.Login==SelectedUser.Login))
+                // Allow save name in a case it wasn't changed
+                if (!(editDataMode && CurrentGenre.Name == SelectedGenre.Name))
                 {
-                    ErrorMessage = "Such a login is already exists";
+                    ErrorMessage = "Such a name is already exists";
                     return;
                 }
             }
-            else if (String.IsNullOrEmpty(CurrentUser.Login))
+            // check name if it is not empty
+            else if (String.IsNullOrEmpty(CurrentGenre.Name))
             {
-                ErrorMessage = "Login must not be empty";
+                ErrorMessage = "Name must not be empty";
                 return;
             }
-            // password
-            else if (String.IsNullOrEmpty(CurrentUser.Password))
-            {
-                ErrorMessage = "Password must not be empty";
-                return;
-            }
-            userDataWindow.DialogResult = true;
-            userDataWindow.Close();
+            genreDataWindow.DialogResult = true;
+            genreDataWindow.Close();
         }
 
         public void LoadDataFromDB()
         {
-            allUsers = context.Users.ToList();
-            NotifyPropertyChanged(nameof(Users));
+            allGenres = context.Genres.ToList();
+            NotifyPropertyChanged(nameof(Genres));
         }
         private void SaveChanges()
         {

@@ -33,6 +33,8 @@ namespace Bookstore
         /****************************************************************************************/
         public LoginVM LoginVM { get; private set; }
         public SourceDataVM SourceDataVM { get; private set; }
+        public BooksVM BooksVM { get; private set; }
+
 
         #endregion
 
@@ -57,6 +59,7 @@ namespace Bookstore
             LoginVM = new LoginVM(context);
             LoginVM.OnSetCurrentUser += (user) => { currentUser = user; };
             SourceDataVM = new SourceDataVM(context);
+            BooksVM = new BooksVM(context);
 
             InitCommands();
         }

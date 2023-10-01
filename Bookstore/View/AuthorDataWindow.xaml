@@ -1,4 +1,4 @@
-﻿<Window x:Class="Bookstore.View.UserDataWindow"
+﻿<Window x:Class="Bookstore.View.AuthorDataWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="User" Height="260" Width="230">
+        Title="Author" Height="260" Width="230">
     
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
             <StackPanel Orientation="Vertical" Height="170">
-                <!-- Login -->
-                <TextBlock Text="Login:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBox Text="{Binding SourceDataVM.UserPageVM.CurrentUser.Login}" Style="{DynamicResource Style_WindowTextBox}"/>
+                <!-- FirstName -->
+                <TextBlock Text="FirstName:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBox Text="{Binding SourceDataVM.AuthorPageVM.CurrentUser.Login}" Style="{DynamicResource Style_WindowTextBox}"/>
 
                 <!-- Password -->
                 <TextBlock Text="Password:" Style="{DynamicResource Style_WindowTextBlock}"/>

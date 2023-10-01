@@ -19,7 +19,7 @@ namespace Bookstore
         public int PagesNumber { get; set; }
         public virtual Genre Genre { get; set; } = null!;
         public DateTime PublicationYear { get; set; }
-        public Double SalesPrice { get; set; }
+        public double SalesPrice { get; set; }
         public virtual Campaing? Campaing { get; set; }
         public bool? IsSequel { get; set; }
         [ForeignKey("BookAsPrequel")]

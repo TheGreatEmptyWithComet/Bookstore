@@ -1,54 +1,45 @@
 ﻿using Bookstore.View;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using static Bookstore.LoginVM;
+using System.Windows;
 
 namespace Bookstore
 {
-    public class UserPageVM : NotifyPropertyChangeHandler
+    public class CustomerPageVM : NotifyPropertyChangeHandler
     {
-        #region Delegates and events
-        /****************************************************************************************/
-        //public delegate void NotifyUserChanged(UserPageVM userPageViewModel);
-        //public event NotifyUserChanged OnNotifyUserChanged;
-        #endregion
-
-
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
         // variable is used to prevent some data checking while they are edited
         private bool editDataMode = false;
-        private UserDataWindow userDataWindow;
+        private CustomerDataWindow customerDataWindow;
         // View model for window binding
-        public UserVM CurrentUser { get; private set; }
+        public CustomerVM CurrentCustomer { get; private set; }
 
         // DB row data
-        private List<User> allUsers;
+        private List<Customer> allCustomers;
         // Data for WPF
-        public ObservableCollection<UserVM> Users { get { return new ObservableCollection<UserVM>(allUsers.Select(i => new UserVM(i))); } }
+        public ObservableCollection<CustomerVM> Customers { get { return new ObservableCollection<CustomerVM>(allCustomers.Select(i => new CustomerVM(i))); } }
 
-        private UserVM selectedUser;
-        public UserVM SelectedUser
+        private CustomerVM selectedCustomer;
+        public CustomerVM SelectedCustomer
         {
             get
             {
-                return selectedUser;
+                return selectedCustomer;
             }
             set
             {
-                if (selectedUser != value)
+                if (selectedCustomer != value)
                 {
-                    selectedUser = value;
-                    NotifyPropertyChanged(nameof(SelectedUser));
+                    selectedCustomer = value;
+                    NotifyPropertyChanged(nameof(SelectedCustomer));
                 }
             }
         }
@@ -81,7 +72,7 @@ namespace Bookstore
 
         #region Constructor
         /****************************************************************************************/
-        public UserPageVM(Context context)
+        public CustomerPageVM(Context context)
         {
             this.context = context;
             LoadDataFromDB();
@@ -94,51 +85,51 @@ namespace Bookstore
         /****************************************************************************************/
         private void InitCommands()
         {
-            AddCommand = new RelayCommand(AddNewUser);
+            AddCommand = new RelayCommand(AddNewCustomer);
             SaveCommand = new RelayCommand(CheckData);
-            EditCommand = new RelayCommand(EditUser);
-            DeleteCommand = new RelayCommand(DeleteUser);
+            EditCommand = new RelayCommand(EditCustomer);
+            DeleteCommand = new RelayCommand(DeleteCustomer);
         }
-        private void AddNewUser()
+        private void AddNewCustomer()
         {
             // Create new user
-            User newUser = new User();
-            CurrentUser = new UserVM(newUser);
+            Customer newCustomer = new Customer();
+            CurrentCustomer = new CustomerVM(newCustomer);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            customerDataWindow = new CustomerDataWindow();
+            customerDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (customerDataWindow.ShowDialog() == true)
             {
-                context.Add(newUser);
-                allUsers.Add(newUser);
+                context.Add(newCustomer);
+                allCustomers.Add(newCustomer);
                 SaveChanges();
             }
         }
-        private void EditUser()
+        private void EditCustomer()
         {
             editDataMode = true;
 
             // Create edited user
-            User editedUser = new User()
+            Customer editedCustomer = new Customer()
             {
-                Login = SelectedUser.Login,
-                Password = SelectedUser.Password
+                Name = SelectedCustomer.Name,
+                PhoneNumber = SelectedCustomer.PhoneNumber
             };
-            CurrentUser = new UserVM(editedUser);
+            CurrentCustomer = new CustomerVM(editedCustomer);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            customerDataWindow = new CustomerDataWindow();
+            customerDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (customerDataWindow.ShowDialog() == true)
             {
                 // change data
-                SelectedUser.Login = editedUser.Login;
-                SelectedUser.Password = editedUser.Password;
+                SelectedCustomer.Name = editedCustomer.Name;
+                SelectedCustomer.PhoneNumber = editedCustomer.PhoneNumber;
 
                 editDataMode = false;
 
@@ -146,53 +137,47 @@ namespace Bookstore
                 SaveChanges();
             }
         }
-        private void DeleteUser()
+        private void DeleteCustomer()
         {
-            // remove user except last
-            if (Users.Count > 1)
-            {
-                context.Remove(SelectedUser.Model);
-                allUsers.Remove(SelectedUser.Model);
-                
-                // update db
-                SaveChanges();
-            }
-            else
-            {
-                MessageBox.Show("The last user can't be deleted");
-            }
+            // remove record
+            context.Remove(SelectedCustomer.Model);
+            allCustomers.Remove(SelectedCustomer.Model);
+
+            // update db
+            SaveChanges();
         }
         private void CheckData()
         {
-            // check login
-            if (allUsers.Any(user => user.Login == CurrentUser.Login))
+            // check name
+            if (String.IsNullOrEmpty(CurrentCustomer.Name))
             {
-                // Allow save login in a case it wasn't changed
-                if (!(editDataMode && CurrentUser.Login==SelectedUser.Login))
+                ErrorMessage = "Name must not be empty";
+                return;
+            }
+            // check number if it is unique
+            else if (allCustomers.Any(customer => customer.PhoneNumber == CurrentCustomer.PhoneNumber))
+            {
+                // Allow save name in a case it wasn't changed
+                if (!(editDataMode && CurrentCustomer.PhoneNumber == SelectedCustomer.PhoneNumber))
                 {
-                    ErrorMessage = "Such a login is already exists";
+                    ErrorMessage = "Such a number is already exists";
                     return;
                 }
             }
-            else if (String.IsNullOrEmpty(CurrentUser.Login))
+            // check number if it is not empty
+            else if (String.IsNullOrEmpty(CurrentCustomer.PhoneNumber))
             {
-                ErrorMessage = "Login must not be empty";
+                ErrorMessage = "Phone number must not be empty";
                 return;
             }
-            // password
-            else if (String.IsNullOrEmpty(CurrentUser.Password))
-            {
-                ErrorMessage = "Password must not be empty";
-                return;
-            }
-            userDataWindow.DialogResult = true;
-            userDataWindow.Close();
+            customerDataWindow.DialogResult = true;
+            customerDataWindow.Close();
         }
 
         public void LoadDataFromDB()
         {
-            allUsers = context.Users.ToList();
-            NotifyPropertyChanged(nameof(Users));
+            allCustomers = context.Customers.ToList();
+            NotifyPropertyChanged(nameof(Customers));
         }
         private void SaveChanges()
         {

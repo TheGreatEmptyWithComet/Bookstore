@@ -1,54 +1,45 @@
 ﻿using Bookstore.View;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using static Bookstore.LoginVM;
+using System.Windows;
 
 namespace Bookstore
 {
-    public class UserPageVM : NotifyPropertyChangeHandler
+    public class AuthorPageVM : NotifyPropertyChangeHandler
     {
-        #region Delegates and events
-        /****************************************************************************************/
-        //public delegate void NotifyUserChanged(UserPageVM userPageViewModel);
-        //public event NotifyUserChanged OnNotifyUserChanged;
-        #endregion
-
-
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
         // variable is used to prevent some data checking while they are edited
         private bool editDataMode = false;
-        private UserDataWindow userDataWindow;
+        private AuthorDataWindow authorDataWindow;
         // View model for window binding
-        public UserVM CurrentUser { get; private set; }
+        public AuthorVM CurrentAuthor { get; private set; }
 
         // DB row data
-        private List<User> allUsers;
+        private List<Author> allAuthors;
         // Data for WPF
-        public ObservableCollection<UserVM> Users { get { return new ObservableCollection<UserVM>(allUsers.Select(i => new UserVM(i))); } }
+        public ObservableCollection<AuthorVM> Authors { get { return new ObservableCollection<AuthorVM>(allAuthors.Select(i => new AuthorVM(i))); } }
 
-        private UserVM selectedUser;
-        public UserVM SelectedUser
+        private AuthorVM selectedAuthor;
+        public AuthorVM SelectedAuthor
         {
             get
             {
-                return selectedUser;
+                return selectedAuthor;
             }
             set
             {
-                if (selectedUser != value)
+                if (selectedAuthor != value)
                 {
-                    selectedUser = value;
-                    NotifyPropertyChanged(nameof(SelectedUser));
+                    selectedAuthor = value;
+                    NotifyPropertyChanged(nameof(SelectedAuthor));
                 }
             }
         }
@@ -81,7 +72,7 @@ namespace Bookstore
 
         #region Constructor
         /****************************************************************************************/
-        public UserPageVM(Context context)
+        public AuthorPageVM(Context context)
         {
             this.context = context;
             LoadDataFromDB();
@@ -94,51 +85,53 @@ namespace Bookstore
         /****************************************************************************************/
         private void InitCommands()
         {
-            AddCommand = new RelayCommand(AddNewUser);
+            AddCommand = new RelayCommand(AddNewAuthor);
             SaveCommand = new RelayCommand(CheckData);
-            EditCommand = new RelayCommand(EditUser);
-            DeleteCommand = new RelayCommand(DeleteUser);
+            EditCommand = new RelayCommand(EditAuthor);
+            DeleteCommand = new RelayCommand(DeleteAuthor);
         }
-        private void AddNewUser()
+        private void AddNewAuthor()
         {
             // Create new user
-            User newUser = new User();
-            CurrentUser = new UserVM(newUser);
+            Author newAuthor = new Author();
+            CurrentAuthor = new AuthorVM(newAuthor);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            authorDataWindow = new AuthorDataWindow();
+            authorDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (authorDataWindow.ShowDialog() == true)
             {
-                context.Add(newUser);
-                allUsers.Add(newUser);
+                context.Add(newAuthor);
+                allAuthors.Add(newAuthor);
                 SaveChanges();
             }
         }
-        private void EditUser()
+        private void EditAuthor()
         {
             editDataMode = true;
 
             // Create edited user
-            User editedUser = new User()
+            Author editedAuthor = new Author()
             {
-                Login = SelectedUser.Login,
-                Password = SelectedUser.Password
+                FirstName = SelectedAuthor.FirstName,
+                LastName = SelectedAuthor.LastName,
+                MiddleName = SelectedAuthor.MiddleName,
             };
-            CurrentUser = new UserVM(editedUser);
+            CurrentAuthor = new AuthorVM(editedAuthor);
             ErrorMessage = string.Empty;
 
             // Create and show window
-            userDataWindow = new UserDataWindow();
-            userDataWindow.Owner = Application.Current.MainWindow;
+            authorDataWindow = new AuthorDataWindow();
+            authorDataWindow.Owner = Application.Current.MainWindow;
 
-            if (userDataWindow.ShowDialog() == true)
+            if (authorDataWindow.ShowDialog() == true)
             {
                 // change data
-                SelectedUser.Login = editedUser.Login;
-                SelectedUser.Password = editedUser.Password;
+                SelectedAuthor.FirstName = editedAuthor.FirstName;
+                SelectedAuthor.LastName = editedAuthor.LastName;
+                SelectedAuthor.MiddleName = editedAuthor.MiddleName;
 
                 editDataMode = false;
 
@@ -146,53 +139,37 @@ namespace Bookstore
                 SaveChanges();
             }
         }
-        private void DeleteUser()
+        private void DeleteAuthor()
         {
-            // remove user except last
-            if (Users.Count > 1)
-            {
-                context.Remove(SelectedUser.Model);
-                allUsers.Remove(SelectedUser.Model);
-                
-                // update db
-                SaveChanges();
-            }
-            else
-            {
-                MessageBox.Show("The last user can't be deleted");
-            }
+            // remove record
+            context.Remove(SelectedAuthor.Model);
+            allAuthors.Remove(SelectedAuthor.Model);
+
+            // update db
+            SaveChanges();
         }
         private void CheckData()
         {
-            // check login
-            if (allUsers.Any(user => user.Login == CurrentUser.Login))
+            // check first name
+            if (String.IsNullOrEmpty(CurrentAuthor.FirstName))
             {
-                // Allow save login in a case it wasn't changed
-                if (!(editDataMode && CurrentUser.Login==SelectedUser.Login))
-                {
-                    ErrorMessage = "Such a login is already exists";
-                    return;
-                }
-            }
-            else if (String.IsNullOrEmpty(CurrentUser.Login))
-            {
-                ErrorMessage = "Login must not be empty";
+                ErrorMessage = "First name must not be empty";
                 return;
             }
-            // password
-            else if (String.IsNullOrEmpty(CurrentUser.Password))
+            // check last name
+            else if (String.IsNullOrEmpty(CurrentAuthor.LastName))
             {
                 ErrorMessage = "Password must not be empty";
                 return;
             }
-            userDataWindow.DialogResult = true;
-            userDataWindow.Close();
+            authorDataWindow.DialogResult = true;
+            authorDataWindow.Close();
         }
 
         public void LoadDataFromDB()
         {
-            allUsers = context.Users.ToList();
-            NotifyPropertyChanged(nameof(Users));
+            allAuthors = context.Authors.ToList();
+            NotifyPropertyChanged(nameof(Authors));
         }
         private void SaveChanges()
         {
