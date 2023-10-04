@@ -93,7 +93,7 @@ namespace Bookstore
         private void AddNewSale()
         {
             // Create new sale
-            Sale newSale = new Sale() { DateTime = DateTime.Now };
+            Sale newSale = new Sale() { DateTime = DateTime.Now, User = LoginVM.CurrentUser };
             CurrentSale = new SaleVM(newSale);
             ErrorMessage = string.Empty;
 

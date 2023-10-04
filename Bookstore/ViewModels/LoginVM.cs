@@ -17,7 +17,7 @@ namespace Bookstore
         #region Delegates and events
         /****************************************************************************************/
         public delegate void SetCurrentUser(User user);
-        public event SetCurrentUser OnSetCurrentUser;
+        public static event SetCurrentUser OnSetCurrentUser;
 
         public delegate void NotifyLogout();
         public event NotifyLogout OnNotifyLogout;
@@ -28,6 +28,7 @@ namespace Bookstore
         /****************************************************************************************/
         private readonly Context context;
         private LoginWindow loginWindow;
+        public static User CurrentUser { get; private set; } = new User();
 
         // Mode to define app window content to be shown
         private bool isAdminMode = false;
@@ -78,7 +79,7 @@ namespace Bookstore
             this.context = context;
 
             // !!! temporary assignment
-            isAdminMode = true;
+            isAdminMode = false;
 
             //LoadDataFromDB();
 
@@ -96,6 +97,7 @@ namespace Bookstore
         {
             UserLogin = string.Empty;
             UserPassword = string.Empty;
+            ErrorMessage = string.Empty;
 
             loginWindow = new LoginWindow();
             loginWindow.Owner = Application.Current.MainWindow;
@@ -104,7 +106,8 @@ namespace Bookstore
             {
                 // login is unique value and user existance is checked in CheckUserData() method
                 User currentUser = context.Users.Where(user => user.Login == UserLogin).FirstOrDefault()!;
-                OnSetCurrentUser?.Invoke(currentUser);
+                CurrentUser = currentUser;
+                //OnSetCurrentUser?.Invoke(currentUser);
                 IsAdminMode = true;
             }
         }

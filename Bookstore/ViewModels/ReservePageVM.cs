@@ -93,7 +93,7 @@ namespace Bookstore
         private void AddNewReserve()
         {
             // Create new reserve
-            Reserve newReserve = new Reserve() { DateTime = DateTime.Now }; 
+            Reserve newReserve = new Reserve() { DateTime = DateTime.Now, User = LoginVM.CurrentUser };
             CurrentReserve = new ReserveVM(newReserve);
             ErrorMessage = string.Empty;
 
@@ -156,7 +156,7 @@ namespace Bookstore
                 ErrorMessage = "Amount must be bigger than 0";
                 return;
             }
-            
+
             reserveDataWindow.DialogResult = true;
             reserveDataWindow.Close();
         }

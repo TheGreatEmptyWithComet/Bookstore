@@ -13,7 +13,7 @@ namespace Bookstore
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
-
+        
         private string currentPage;
         public string CurrentPage
         {

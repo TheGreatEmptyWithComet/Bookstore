@@ -67,6 +67,8 @@ namespace Bookstore
         public ICommand EditCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
+        public ICommand ClearCampaingCommand { get; private set; }
+        public ICommand LoadBooksFromDbCommand { get; private set; }
         #endregion
 
 
@@ -89,11 +91,12 @@ namespace Bookstore
             SaveCommand = new RelayCommand(CheckData);
             EditCommand = new RelayCommand(EditBook);
             DeleteCommand = new RelayCommand(DeleteBook);
+            ClearCampaingCommand = new RelayCommand(ClearCampaing);
         }
         private void AddNewBook()
         {
             // Create new user
-            Book newBook = new Book() {PublicationYear=DateTime.Now };
+            Book newBook = new Book() { PublicationYear = DateTime.Now };
             CurrentBook = new BookVM(newBook);
             ErrorMessage = string.Empty;
 
@@ -202,6 +205,19 @@ namespace Bookstore
             {
                 string innerMessage = ex.InnerException != null ? ex.InnerException.Message : string.Empty;
                 MessageBox.Show(ex.Message + "\n" + innerMessage, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void ClearCampaing()
+        {
+            if (bookDataWindow != null && bookDataWindow.IsActive)
+            {
+                CurrentBook.Model.Campaing = null;
+            }
+            else
+            {
+                SelectedBook.Model.Campaing = null;
+                // update db
+                SaveChanges();
             }
         }
         #endregion

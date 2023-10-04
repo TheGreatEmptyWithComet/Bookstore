@@ -93,7 +93,7 @@ namespace Bookstore
         private void AddNewArrival()
         {
             // Create new arrival
-            Arrival newArrival = new Arrival() { DateTime = DateTime.Now };
+            Arrival newArrival = new Arrival() { DateTime = DateTime.Now, User = LoginVM.CurrentUser };
             CurrentArrival = new ArrivalVM(newArrival);
             ErrorMessage = string.Empty;
 

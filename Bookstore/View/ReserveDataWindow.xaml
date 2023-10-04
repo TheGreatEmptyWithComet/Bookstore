@@ -7,36 +7,48 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="Reserve" Height="370" Width="300">
+        Title="Reserve" Height="450" Width="300">
 
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
-            <StackPanel Orientation="Vertical" Height="270">
+            <StackPanel Orientation="Vertical" Height="350">
                 <!-- Book -->
                 <TextBlock Text="Book:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <ComboBox ItemsSource="{Binding BookPageVM.Books}" SelectedIndex="0" SelectedItem="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book}" Margin="0 0 0 10">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text=", "/>
-                                <TextBlock Text="{Binding Author.FirstName}"/>
-                                <TextBlock Text="{Binding Author.LastName}"/>
-                                <TextBlock Text=", "/>
-                                <TextBlock Text="{Binding PublicationYear}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
+                <ComboBox ItemsSource="{Binding BookPageVM.Books}" 
+                          SelectedIndex="0" 
+                          SelectedItem="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book}" 
+                          Style="{DynamicResource Style_ComboBox_Book}"/>
+                    
                 <!-- Date -->
                 <TextBlock Text="Date:" Style="{DynamicResource Style_WindowTextBlock}"/>
                 <DatePicker DisplayDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" SelectedDate="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Date}" Margin="0 0 0 10" SelectedDateFormat="Short" FontSize="14"/>
 
-                <!-- Amount -->
-                <TextBlock Text="Amount:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <!-- Available amount-->
+                <TextBlock Text="Available amount:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <TextBlock Text="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book.StockAmount}" Style="{DynamicResource Style_WindowTextBoxNoEditableTextBlock}"/>
+                
+                <!-- Amount to reserve-->
+                <TextBlock Text="Amount to reserve:" Style="{DynamicResource Style_WindowTextBlock}"/>
                 <TextBox Text="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Amount}" Style="{DynamicResource Style_WindowTextBox}"/>
+
+                <!-- Customer for reserve -->
+                <TextBlock Text="Customer:" Style="{DynamicResource Style_WindowTextBlock}"/>
+                <ComboBox ItemsSource="{Binding SourceDataVM.CustomerPageVM.Customers}" 
+                              SelectedIndex="0" 
+                              SelectedItem="{Binding SourceDataVM.ReservePageVM.CurrentReserve.Book.ReservedForCustomer}" 
+                              Style="{DynamicResource Style_ComboBoxBase}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Phone #"/>
+                                <TextBlock Text="{Binding PhoneNumber}"/>
+                                <TextBlock Text=", "/>
+                                <TextBlock Text="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- Error message -->
                 <TextBlock Text="{Binding  SourceDataVM.ReservePageVM.ErrorMessage}" Style="{DynamicResource Style_WindowErrorMessageTextBlock}" />

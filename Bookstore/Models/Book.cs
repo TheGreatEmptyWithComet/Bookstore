@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace Bookstore
         public DateTime PublicationYear { get; set; }
         public double SalesPrice { get; set; }
         public virtual Campaing? Campaing { get; set; }
-        public bool? IsSequel { get; set; } = false;
+        public bool? IsSequel { get; set; }
         [ForeignKey("BookAsPrequel")]
         public virtual Book? PrequelBook { get; set; }
-        public bool? IsNewArrival { get; set; } = false;
+        public bool? IsNewArrival { get; set; }
         public virtual Customer? ReservedForCustomer { get; set; }
         // reference to the origin book when book is reserved
         [ForeignKey("BookAsOriginReference")]
@@ -32,8 +33,8 @@ namespace Bookstore
 
 
         // navigation properties
-        public virtual ICollection<Arrival> Arrivals { get; set; } = null!;
-        public virtual ICollection<Sale> Sales { get; set; } = null!;
-        public virtual ICollection<Reserve> Reserves { get; set; } = null!;
+        public virtual ICollection<Arrival> Arrivals { get; set; } = new ObservableCollection<Arrival>();
+        public virtual ICollection<Sale> Sales { get; set; } = new ObservableCollection<Sale>();
+        public virtual ICollection<Reserve> Reserves { get; set; } = new ObservableCollection<Reserve>();
     }
 }

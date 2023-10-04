@@ -8,6 +8,8 @@ namespace Bookstore
 {
     public class BookVM : NotifyPropertyChangeHandler
     {
+        // Properties
+        /****************************************************************************************/
         public Book Model { get; set; }
 
         public int Id { get => Model.Id; }
@@ -113,7 +115,7 @@ namespace Bookstore
             get => Model.IsSequel ?? false;
             set
             {
-                if (Model.IsSequel != null && Model.IsSequel != value)
+                if (Model.IsSequel != value)
                 {
                     Model.IsSequel = value;
                     NotifyPropertyChanged(nameof(IsSequel));
@@ -137,7 +139,7 @@ namespace Bookstore
             get => Model.IsNewArrival ?? false;
             set
             {
-                if (Model.IsNewArrival != null && Model.IsNewArrival != value)
+                if (Model.IsNewArrival != value)
                 {
                     Model.IsNewArrival = value;
                     NotifyPropertyChanged(nameof(IsNewArrival));
@@ -169,14 +171,27 @@ namespace Bookstore
             }
         }
 
+        // Calculated properties
+        /****************************************************************************************/
+        public int StockAmount
+        {
+            // Stock amount = Arrivals - Sales - Reserves
+            get => Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) -
+                Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount) -
+                Model.Reserves.Where((res) => res.Book.Id == Model.Id).Sum((res) => res.Amount);
+        }
 
 
+        // Constructor
+        /****************************************************************************************/
         public BookVM(Book book)
         {
             Model = book;
         }
 
 
+        // Methods
+        /****************************************************************************************/
         public override bool Equals(object? obj)
         {
             if (obj == null || obj is not BookVM bookVM || bookVM.Model == null)

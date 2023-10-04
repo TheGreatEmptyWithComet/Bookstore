@@ -54,8 +54,10 @@
                 <DataGridTextColumn Header="Author first name" Binding="{Binding Path=Book.Author.FirstName}"/>
                 <DataGridTextColumn Header="Author last name" Binding="{Binding Path=Book.Author.LastName}"/>
                 <DataGridTextColumn Header="Publishing year" Binding="{Binding Path=Book.Author.LastName}"/>
-                <DataGridTextColumn Header="Reserve date" Binding="{Binding Path=Date}"/>
+                <DataGridTextColumn Header="Reserve date" Binding="{Binding Path=Date, StringFormat='dd.MM.yyyy'}"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount}"/>
+                <DataGridTextColumn Header="Customer name" Binding="{Binding Path=Book.ReservedForCustomer.Name}"/>
+                <DataGridTextColumn Header="Customer phone" Binding="{Binding Path=Book.ReservedForCustomer.PhoneNumber}"/>
                 <DataGridTextColumn Header="Manager login" Binding="{Binding Path=User.Login}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

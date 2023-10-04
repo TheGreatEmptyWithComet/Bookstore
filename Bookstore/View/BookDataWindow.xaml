@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         DataContext="{StaticResource mainVM}"
-        Title="Book" Height="650" Width="550">
+        Title="Book" Height="600" Width="550">
 
     <Window.Resources>
         <DataTemplate x:Key="ItemTemplate_BookComboBox">
@@ -26,7 +26,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Data -->
-            <StackPanel Orientation="Vertical" Height="540">
+            <StackPanel Orientation="Vertical" Height="490">
                 <!-- Name -->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -152,20 +152,34 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Campaing:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <ComboBox ItemsSource="{Binding  SourceDataVM.CampaingPageVM.Campaings}" 
-                              SelectedItem="{Binding BookPageVM.CurrentBook.Campaing}" 
-                              Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                    <TextBlock Text=", discount = "/>
-                                    <TextBlock Text="{Binding DiscountPercent}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Campaing selection combo box -->
+                        <ComboBox ItemsSource="{Binding  SourceDataVM.CampaingPageVM.Campaings}" 
+                                  SelectedItem="{Binding BookPageVM.CurrentBook.Campaing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  Grid.Column="0"
+                                  x:Name="CampaingComboBox"
+                                  Style="{DynamicResource Style_ComboBoxBase}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text=", discount = "/>
+                                        <TextBlock Text="{Binding DiscountPercent}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <!-- Clear campaing button -->
+                        <Button Content="X" Grid.Column="1" Margin="2 0 0 0" FontSize="15" Width="24" Height="24" VerticalAlignment="Top" Command="{Binding BookPageVM.ClearCampaingCommand}"/>
+
+
+                    </Grid>
                 </Grid>
 
                 <!-- Is sequel -->
@@ -202,31 +216,6 @@
 
                     <TextBlock Text="Is new arrival:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
                     <CheckBox IsChecked="{Binding BookPageVM.CurrentBook.IsNewArrival, Mode=TwoWay}" Grid.Column="1"/>
-                </Grid>
-
-                <!-- Reserved For Customer -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="70*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Reserved for customer:" Style="{DynamicResource Style_WindowTextBlock}" Grid.Column="0"/>
-                    <ComboBox ItemsSource="{Binding  SourceDataVM.CustomerPageVM.Customers}" 
-                              SelectedItem="{Binding BookPageVM.CurrentBook.ReservedForCustomer}" 
-                              Grid.Column="1" 
-                              Style="{DynamicResource Style_ComboBoxBase}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="phone #"/>
-                                    <TextBlock Text="{Binding PhoneNumber}"/>
-                                    <TextBlock Text=", "/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
                 </Grid>
 
                 <!-- Error message -->

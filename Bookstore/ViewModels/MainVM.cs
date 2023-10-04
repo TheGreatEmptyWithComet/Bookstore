@@ -9,12 +9,20 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Bookstore
 {
+    // task to complite
+    // 1. add user to arrival, sale and reserve documents +
+    // 2. refresh book page when opens
+    // 3. add sale, reserve, arrival command to books page
+    // 4. customise books page to different users
+    // 5. add satistic
+    // 6. add amount, cost column to books table
+    
+    
     public class MainVM : NotifyPropertyChangeHandler
     {
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
-        private User currentUser;
 
         private string currentPage;
         public string CurrentPage
@@ -57,7 +65,6 @@ namespace Bookstore
 
             // init inner view models
             LoginVM = new LoginVM(context);
-            LoginVM.OnSetCurrentUser += (user) => { currentUser = user; };
             // On logout set the current page to the one that is available to unregistered users
             LoginVM.OnNotifyLogout += () => { CurrentPage = "BooksPageView.xaml"; };
             
