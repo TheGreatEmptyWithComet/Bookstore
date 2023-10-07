@@ -29,7 +29,7 @@ namespace Bookstore
         public virtual Customer? ReservedForCustomer { get; set; }
         // reference to the origin book when book is reserved
         [ForeignKey("BookAsOriginReference")]
-        public virtual Book? OriginBook { get; set; }
+        //public virtual Book? OriginBook { get; set; }
 
 
         // navigation properties

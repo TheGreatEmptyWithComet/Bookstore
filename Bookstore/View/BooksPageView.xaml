@@ -13,6 +13,99 @@
         <!-- Page info header -->
         <TextBlock Text="Books" Style="{DynamicResource Style_WindowTextBlock}" DockPanel.Dock="Top" Margin="5 5 0 0"/>
 
+        <!-- Search block -->
+        <Border BorderBrush="CornflowerBlue" BorderThickness="1" DockPanel.Dock="Top" Margin="5 2 5 0" Visibility="{Binding BookPageVM.SearchIsVisible, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
+            <StackPanel Orientation="Vertical" Margin="2 0 0 0">
+                <TextBlock Text="Search:" Style="{DynamicResource Style_WindowTextBlock}" Margin="1 1 0 0"/>
+                <DockPanel>
+                    <!-- Start search button -->
+                    <Button Content="Search" 
+                            Command="{Binding BookPageVM.StartSearchCommand}" 
+                            Style="{DynamicResource Style_MenuButtonBase}" 
+                            Margin="5 0 2 0" DockPanel.Dock="Right" 
+                            Width="100" Height="28" 
+                            VerticalAlignment="Top"/>
+
+                    <!-- Fields for search -->
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Book name & Author name -->
+                        <StackPanel Orientation="Vertical">
+                            <!-- Book name field -->
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Title -->
+                                <TextBlock Text="Book name:" Style="{DynamicResource Style_WindowSearchTextBlock}"/>
+                                <!-- Text field -->
+                                <TextBox Text="{Binding BookPageVM.BookNameForSerach}" Width="200" Style="{DynamicResource Style_WindowTextBox}"/>
+                                <!-- Clear button -->
+                                <Button Content="Clear"  Height="24" Margin="2 0 0 0" Padding="5 0 5 0" FontSize="14" Command="{Binding BookPageVM.ClearSearchBookNameCommand}" VerticalAlignment="Top"/>
+                            </StackPanel>
+
+                            <!-- Author name field -->
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Title -->
+                                <TextBlock Text="Author name:" Style="{DynamicResource Style_WindowSearchTextBlock}"/>
+                                <!-- Authors list -->
+                                <ComboBox ItemsSource="{Binding SourceDataVM.AuthorPageVM.Authors}" 
+                                          SelectedItem="{Binding BookPageVM.AuthorForSearch}"
+                                          Width="200"
+                                          Style="{DynamicResource Style_ComboBoxBase}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding FirstName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding LastName}"/>
+                                                <TextBlock Text=" "/>
+                                                <TextBlock Text="{Binding MiddleName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <!-- Clear button -->
+                                <Button Content="Clear"  Height="24" Margin="2 0 0 0" Padding="5 0 5 0" FontSize="14" Command="{Binding BookPageVM.ClearSearchAuthorCommand}" VerticalAlignment="Top"/>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Genre & Is new arrival -->
+                        <StackPanel Orientation="Vertical" Margin="10 0 0 0">
+                            <!-- Genre field -->
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Title -->
+                                <TextBlock Text="Genre:" Style="{DynamicResource Style_WindowSearchTextBlock}"/>
+                                <!-- Genres list -->
+                                <ComboBox ItemsSource="{Binding SourceDataVM.GenrePageVM.Genres}" 
+                                          SelectedItem="{Binding BookPageVM.GengeForSearch}" 
+                                          Width="200"
+                                          Style="{DynamicResource Style_ComboBoxBase}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <!-- Clear button -->
+                                <Button Content="Clear"  Height="24" Margin="2 0 0 0" Padding="5 0 5 0" FontSize="14" Command="{Binding BookPageVM.ClearSearchGenreCommand}" VerticalAlignment="Top"/>
+                            </StackPanel>
+
+                            <!-- Is new arrival -->
+                            <StackPanel Orientation="Horizontal" x:Name="StackPanel1">
+                                <TextBlock Text="Is new arrival:" Style="{DynamicResource Style_WindowSearchTextBlock}"/>
+                                <Viewbox Height="{Binding Path=ActualHeight, ElementName=StackPanel1}">
+                                    <CheckBox IsChecked="{Binding BookPageVM.IsNewArrivalForSearch}"/>
+                                </Viewbox>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+
+
+        </Border>
+
         <!-- Command buttons -->
         <StackPanel Width="110" DockPanel.Dock="Right" Orientation="Vertical" Visibility="{Binding LoginVM.IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
             <!-- New book button -->
@@ -23,7 +116,7 @@
 
             <!-- Delete book button -->
             <Button Content="Delete" Command="{Binding BookPageVM.DeleteCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
-            
+
             <!-- Receive book button -->
             <Button Content="Receive" Command="{Binding BookPageVM.AddNewArrivalCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}" 
                     ToolTip="Receive book.&#x0a;To edit/remove arrival go to 'Arrivals' in 'Source data' menu"/>
@@ -36,12 +129,15 @@
             <Button Content="Reserve" Command="{Binding BookPageVM.AddNewReserveCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}" 
                     ToolTip="Reserve book.&#x0a;To edit/remove reserve go to 'Reserves' in 'Source data' menu"/>
 
+            <!-- Search visibility book button -->
+            <Button Content="Search" Command="{Binding BookPageVM.ChangeSearchVisibilityCommand}" Style="{DynamicResource Style_MenuButtonBase}"
+                    ToolTip="Open/close search visibility"/>
 
         </StackPanel>
 
         <!-- Data table -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding BookPageVM.Books}" SelectedItem="{Binding BookPageVM.SelectedBook}">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="0 5 0 0">
+            <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding BookPageVM.Books}" SelectedItem="{Binding BookPageVM.SelectedBook}" Margin="5 0 0 5">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
@@ -75,8 +171,7 @@
                     <DataGridTextColumn Header="Discount&#x0a;percent" Binding="{Binding Path=Campaing.DiscountPercent}"/>
                     <DataGridCheckBoxColumn Header="Is&#x0a;sequel" Binding="{Binding Path=IsSequel}"/>
                     <DataGridTextColumn Header="Prequel book name" Binding="{Binding Path=PrequelBook.Name}"/>
-                    <DataGridCheckBoxColumn Header="New&#x0a;arrival" Binding="{Binding Path=IsNewArrival}"/>
-                    <DataGridTextColumn Header="Reserved for&#x0a;customer" Binding="{Binding Path=ReservedForCustomer.PhoneNumber}"/>
+                    <DataGridCheckBoxColumn Header="New&#x0a;arrival" Binding="{Binding Path=IsNewArrival}" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

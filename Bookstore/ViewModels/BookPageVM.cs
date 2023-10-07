@@ -42,10 +42,7 @@ namespace Bookstore
         private BookVM selectedBook;
         public BookVM SelectedBook
         {
-            get
-            {
-                return selectedBook;
-            }
+            get => selectedBook;
             set
             {
                 if (selectedBook != value)
@@ -60,16 +57,61 @@ namespace Bookstore
         private string errorMessage;
         public string ErrorMessage
         {
-            get
-            {
-                return errorMessage;
-            }
+            get => errorMessage;
             set
             {
                 errorMessage = value;
                 NotifyPropertyChanged(nameof(ErrorMessage));
             }
         }
+        // Properties for serch
+        private bool searchIsVisible = false;
+        public bool SearchIsVisible
+        {
+            get => searchIsVisible;
+            set
+            {
+                searchIsVisible = value;
+                NotifyPropertyChanged(nameof(SearchIsVisible));
+            }
+        }
+        private string bookNameForSerach = string.Empty;
+        public string BookNameForSerach
+        {
+            get => bookNameForSerach;
+            set
+            {
+                bookNameForSerach = value;
+                NotifyPropertyChanged(nameof(BookNameForSerach));
+            }
+        }
+        private AuthorVM? authorForSearch;
+        public AuthorVM? AuthorForSearch
+        {
+            get => authorForSearch;
+            set
+            {
+                if (authorForSearch != value)
+                {
+                    authorForSearch = value;
+                    NotifyPropertyChanged(nameof(AuthorForSearch));
+                }
+            }
+        }
+        private GenreVM? gengeForSearch;
+        public GenreVM? GengeForSearch
+        {
+            get => gengeForSearch;
+            set
+            {
+                if (gengeForSearch != value)
+                {
+                    gengeForSearch = value;
+                    NotifyPropertyChanged(nameof(GengeForSearch));
+                }
+            }
+        }
+        public bool IsNewArrivalForSearch { get; set; } = false;
         #endregion
 
 
@@ -84,6 +126,11 @@ namespace Bookstore
         public ICommand AddNewArrivalCommand { get; private set; }
         public ICommand AddNewSaleCommand { get; private set; }
         public ICommand AddNewReserveCommand { get; private set; }
+        public ICommand ChangeSearchVisibilityCommand { get; private set; }
+        public ICommand ClearSearchBookNameCommand { get; private set; }
+        public ICommand ClearSearchAuthorCommand { get; private set; }
+        public ICommand ClearSearchGenreCommand { get; private set; }
+        public ICommand StartSearchCommand { get; private set; }
         #endregion
 
 
@@ -94,7 +141,7 @@ namespace Bookstore
             this.context = context;
             LoadDataFromDB();
             InitCommands();
-            Books = CollectionViewSource.GetDefaultView(new ObservableCollection<BookVM>(allBooks!.Select(i => new BookVM(i))));
+            
         }
         #endregion
 
@@ -112,6 +159,11 @@ namespace Bookstore
             AddNewArrivalCommand = new RelayCommand(AddNewArrival);
             AddNewSaleCommand = new RelayCommand(AddNewSale);
             AddNewReserveCommand = new RelayCommand(AddNewReserve);
+            ChangeSearchVisibilityCommand = new RelayCommand(ChangeSearchVisibility);
+            ClearSearchBookNameCommand = new RelayCommand(() => { BookNameForSerach = string.Empty; });
+            ClearSearchAuthorCommand = new RelayCommand(() => { AuthorForSearch = null; });
+            ClearSearchGenreCommand = new RelayCommand(() => { GengeForSearch = null; });
+            StartSearchCommand = new RelayCommand(StartSearch);
         }
         private void AddNewBook()
         {
@@ -212,8 +264,8 @@ namespace Bookstore
         public void LoadDataFromDB()
         {
             allBooks = context.Books.ToList();
+            Books = CollectionViewSource.GetDefaultView(new ObservableCollection<BookVM>(allBooks!.Select(i => new BookVM(i))));
             NotifyPropertyChanged(nameof(Books));
-            
         }
         private void SaveChanges()
         {
@@ -242,7 +294,7 @@ namespace Bookstore
         private void AddNewArrival()
         {
             // invoke Add method from ArrivalPageVM
-            OnNewArrivalNeeded?.Invoke(SelectedBook.Model); 
+            OnNewArrivalNeeded?.Invoke(SelectedBook.Model);
             // refresh the view to update amount values in datagrid tabel
             Books.Refresh();
         }
@@ -259,6 +311,36 @@ namespace Bookstore
             OnNewReserveNeeded?.Invoke(SelectedBook.Model);
             // refresh the view to update amount values in datagrid tabel
             Books.Refresh();
+        }
+        private void ChangeSearchVisibility()
+        {
+            if (SearchIsVisible)
+            {
+                SearchIsVisible = false;
+            }
+            else
+            {
+                SearchIsVisible = true;
+            }
+        }
+        private void StartSearch()
+        {
+            Books.Filter = BookFolterCriteries;
+            Books.Refresh();
+        }
+        private bool BookFolterCriteries(object obj)
+        {
+            if (obj is BookVM book)
+            {
+                bool nameCondition = string.IsNullOrEmpty(BookNameForSerach) ? true : book.Name.Contains(BookNameForSerach);
+                bool authorCondition = AuthorForSearch == null ? true : book.Author.Equals(AuthorForSearch);
+                bool genreCondition = GengeForSearch == null ? true : book.Genre.Equals(GengeForSearch);
+                bool newArrivalCondition = IsNewArrivalForSearch == false ? true : book.IsNewArrival;
+
+                return nameCondition && authorCondition && genreCondition && newArrivalCondition;
+            }
+
+            return true;
         }
         #endregion
     }

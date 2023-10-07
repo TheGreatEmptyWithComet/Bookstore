@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bookstore.View"
         mc:Ignorable="d"
         DataContext="{StaticResource mainVM}"
-        Title="MainView" Height="675" Width="1200">
+        Title="MainView" Height="675" Width="1300">
     <DockPanel >
         <!-- Menu grid-->
         <Grid DockPanel.Dock="Top" Background="LightBlue">
