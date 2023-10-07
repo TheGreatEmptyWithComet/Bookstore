@@ -185,12 +185,22 @@ namespace Bookstore
         /****************************************************************************************/
         public int GeneralStockAmount
         {
-            get => Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) -
-                Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount);
+            get
+            {
+                if (Model != null)
+                {
+                    return Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) -
+                        Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
         public int ReservedAmount
         {
-            get => Model.Reserves.Where((res) => res.Book.Id == Model.Id).Sum((res) => res.Amount);
+            get => Model != null ? Model.Reserves.Where((res) => res.Book.Id == Model.Id).Sum((res) => res.Amount) : 0;
         }
         public int AvailableToSaleAmount
         {

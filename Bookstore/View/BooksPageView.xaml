@@ -16,13 +16,25 @@
         <!-- Command buttons -->
         <StackPanel Width="110" DockPanel.Dock="Right" Orientation="Vertical" Visibility="{Binding LoginVM.IsAdminMode, Converter={StaticResource isAdminModeToVisibilityBoolToEnumConverter}}">
             <!-- New book button -->
-            <Button Command="{Binding BookPageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}">Add</Button>
+            <Button Content="Add" Command="{Binding BookPageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}" ToolTip="Add new book"/>
 
             <!-- Edit book button -->
-            <Button Command="{Binding BookPageVM.EditCommand}" Content="Edit" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
+            <Button Content="Edit" Command="{Binding BookPageVM.EditCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
 
             <!-- Delete book button -->
-            <Button Command="{Binding BookPageVM.DeleteCommand}" Content="Delete" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
+            <Button Content="Delete" Command="{Binding BookPageVM.DeleteCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
+            
+            <!-- Receive book button -->
+            <Button Content="Receive" Command="{Binding BookPageVM.AddNewArrivalCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}" 
+                    ToolTip="Receive book.&#x0a;To edit/remove arrival go to 'Arrivals' in 'Source data' menu"/>
+
+            <!-- Sale book button -->
+            <Button Content="Sale" Command="{Binding BookPageVM.AddNewSaleCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}" 
+                    ToolTip="Sale available to sale book.&#x0a;To sale reserved book go to 'Sales' in 'Source data' menu.&#x0a;To edit/remove sales go to 'Sales' in 'Source data' menu"/>
+
+            <!-- Reserve book button -->
+            <Button Content="Reserve" Command="{Binding BookPageVM.AddNewReserveCommand}" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}" 
+                    ToolTip="Reserve book.&#x0a;To edit/remove reserve go to 'Reserves' in 'Source data' menu"/>
 
 
         </StackPanel>

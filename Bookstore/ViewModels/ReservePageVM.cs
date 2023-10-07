@@ -77,6 +77,9 @@ namespace Bookstore
             this.context = context;
             LoadDataFromDB();
             InitCommands();
+
+            // subscribe to BookPageVM event to make it able to invoke this class AddNewreserve method from there
+            BookPageVM.OnNewReserveNeeded += AddNewReserve;
         }
         #endregion
 
@@ -85,15 +88,19 @@ namespace Bookstore
         /****************************************************************************************/
         private void InitCommands()
         {
-            AddCommand = new RelayCommand(AddNewReserve);
+            AddCommand = new RelayCommand<Book>(AddNewReserve);
             SaveCommand = new RelayCommand(CheckData);
             EditCommand = new RelayCommand(EditReserve);
             DeleteCommand = new RelayCommand(DeleteReserve);
         }
-        private void AddNewReserve()
+        private void AddNewReserve(Book? alreadySelectedBook = null)
         {
             // Create new reserve
-            Reserve newReserve = new Reserve() { DateTime = DateTime.Now, User = LoginVM.CurrentUser };
+            Reserve newReserve = new Reserve() { DateTime = DateTime.Now, User = LoginVM.CurrentUser, Book = new Book() };
+            if (alreadySelectedBook != null)
+            {
+                newReserve.Book = alreadySelectedBook;
+            }
             CurrentReserve = new ReserveVM(newReserve);
             ErrorMessage = string.Empty;
 
@@ -150,8 +157,14 @@ namespace Bookstore
         }
         private void CheckData()
         {
+            // check book
+            if (CurrentReserve.Book.Model == null)
+            {
+                ErrorMessage = "Select a book";
+                return;
+            }
             // check amount
-            if (CurrentReserve.Amount <= 0)
+            else if (CurrentReserve.Amount <= 0)
             {
                 ErrorMessage = "Amount must be bigger than 0";
                 return;

@@ -77,6 +77,9 @@ namespace Bookstore
             this.context = context;
             LoadDataFromDB();
             InitCommands();
+
+            // subscribe to BookPageVM event to make it able to invoke this class AddNewArrival method from there
+            BookPageVM.OnNewArrivalNeeded += AddNewArrival;
         }
         #endregion
 
@@ -85,15 +88,19 @@ namespace Bookstore
         /****************************************************************************************/
         private void InitCommands()
         {
-            AddCommand = new RelayCommand(AddNewArrival);
+            AddCommand = new RelayCommand<Book>(AddNewArrival);
             SaveCommand = new RelayCommand(CheckData);
             EditCommand = new RelayCommand(EditArrival);
             DeleteCommand = new RelayCommand(DeleteArrival);
         }
-        private void AddNewArrival()
+        private void AddNewArrival(Book? alreadySelectedBook = null)
         {
-            // Create new arrival
+            //Create new arrival
             Arrival newArrival = new Arrival() { DateTime = DateTime.Now, User = LoginVM.CurrentUser };
+            if (alreadySelectedBook != null)
+            {
+                newArrival.Book = alreadySelectedBook;
+            }
             CurrentArrival = new ArrivalVM(newArrival);
             ErrorMessage = string.Empty;
 

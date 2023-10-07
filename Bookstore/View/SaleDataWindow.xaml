@@ -16,7 +16,6 @@
                 <!-- Book -->
                 <TextBlock Text="Book:" Style="{DynamicResource Style_WindowTextBlock}"/>
                 <ComboBox ItemsSource="{Binding BookPageVM.Books}" 
-                          SelectedIndex="0" 
                           SelectedItem="{Binding SourceDataVM.SalePageVM.CurrentSale.Book}" 
                           Style="{DynamicResource Style_ComboBox_Book}"/>
 

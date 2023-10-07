@@ -8,11 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Bookstore
 {
     public class BookPageVM : NotifyPropertyChangeHandler
     {
+        #region Delegates & Events
+        /****************************************************************************************/
+        public delegate void BookActionNeeded(Book book);
+        public static event BookActionNeeded? OnNewArrivalNeeded;
+        public static event BookActionNeeded? OnNewSaleNeeded;
+        public static event BookActionNeeded? OnNewReserveNeeded;
+        #endregion
+
+
         #region Properties
         /****************************************************************************************/
         private readonly Context context;
@@ -25,7 +36,8 @@ namespace Bookstore
         // DB row data
         private List<Book> allBooks;
         // Data for WPF
-        public ObservableCollection<BookVM> Books { get { return new ObservableCollection<BookVM>(allBooks.Select(i => new BookVM(i))); } }
+        //public ObservableCollection<BookVM> Books { get { return new ObservableCollection<BookVM>(allBooks.Select(i => new BookVM(i))); } }
+        public ICollectionView Books { get; private set; }
 
         private BookVM selectedBook;
         public BookVM SelectedBook
@@ -69,7 +81,9 @@ namespace Bookstore
         public ICommand SaveCommand { get; private set; }
         public ICommand ClearCampaingCommand { get; private set; }
         public ICommand ClearPrequelBookCommand { get; private set; }
-        public ICommand LoadBooksFromDbCommand { get; private set; }
+        public ICommand AddNewArrivalCommand { get; private set; }
+        public ICommand AddNewSaleCommand { get; private set; }
+        public ICommand AddNewReserveCommand { get; private set; }
         #endregion
 
 
@@ -80,6 +94,7 @@ namespace Bookstore
             this.context = context;
             LoadDataFromDB();
             InitCommands();
+            Books = CollectionViewSource.GetDefaultView(new ObservableCollection<BookVM>(allBooks!.Select(i => new BookVM(i))));
         }
         #endregion
 
@@ -94,6 +109,9 @@ namespace Bookstore
             DeleteCommand = new RelayCommand(DeleteBook);
             ClearCampaingCommand = new RelayCommand(ClearCampaing);
             ClearPrequelBookCommand = new RelayCommand(ClearPrequelBook);
+            AddNewArrivalCommand = new RelayCommand(AddNewArrival);
+            AddNewSaleCommand = new RelayCommand(AddNewSale);
+            AddNewReserveCommand = new RelayCommand(AddNewReserve);
         }
         private void AddNewBook()
         {
@@ -195,6 +213,7 @@ namespace Bookstore
         {
             allBooks = context.Books.ToList();
             NotifyPropertyChanged(nameof(Books));
+            
         }
         private void SaveChanges()
         {
@@ -208,14 +227,38 @@ namespace Bookstore
                 string innerMessage = ex.InnerException != null ? ex.InnerException.Message : string.Empty;
                 MessageBox.Show(ex.Message + "\n" + innerMessage, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            Books.Refresh();
         }
         private void ClearCampaing()
         {
             CurrentBook.Campaing = null;
+            Books.Refresh();
         }
         private void ClearPrequelBook()
         {
             CurrentBook.PrequelBook = null;
+            Books.Refresh();
+        }
+        private void AddNewArrival()
+        {
+            // invoke Add method from ArrivalPageVM
+            OnNewArrivalNeeded?.Invoke(SelectedBook.Model); 
+            // refresh the view to update amount values in datagrid tabel
+            Books.Refresh();
+        }
+        private void AddNewSale()
+        {
+            // invoke Add method from SalePageVM
+            OnNewSaleNeeded?.Invoke(SelectedBook.Model);
+            // refresh the view to update amount values in datagrid tabel
+            Books.Refresh();
+        }
+        private void AddNewReserve()
+        {
+            // invoke Add method from ReservePageVM
+            OnNewReserveNeeded?.Invoke(SelectedBook.Model);
+            // refresh the view to update amount values in datagrid tabel
+            Books.Refresh();
         }
         #endregion
     }
