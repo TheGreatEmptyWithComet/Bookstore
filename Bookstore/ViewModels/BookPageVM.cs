@@ -68,6 +68,7 @@ namespace Bookstore
         public ICommand DeleteCommand { get; private set; }
         public ICommand SaveCommand { get; private set; }
         public ICommand ClearCampaingCommand { get; private set; }
+        public ICommand ClearPrequelBookCommand { get; private set; }
         public ICommand LoadBooksFromDbCommand { get; private set; }
         #endregion
 
@@ -92,6 +93,7 @@ namespace Bookstore
             EditCommand = new RelayCommand(EditBook);
             DeleteCommand = new RelayCommand(DeleteBook);
             ClearCampaingCommand = new RelayCommand(ClearCampaing);
+            ClearPrequelBookCommand = new RelayCommand(ClearPrequelBook);
         }
         private void AddNewBook()
         {
@@ -209,16 +211,11 @@ namespace Bookstore
         }
         private void ClearCampaing()
         {
-            if (bookDataWindow != null && bookDataWindow.IsActive)
-            {
-                CurrentBook.Model.Campaing = null;
-            }
-            else
-            {
-                SelectedBook.Model.Campaing = null;
-                // update db
-                SaveChanges();
-            }
+            CurrentBook.Campaing = null;
+        }
+        private void ClearPrequelBook()
+        {
+            CurrentBook.PrequelBook = null;
         }
         #endregion
     }

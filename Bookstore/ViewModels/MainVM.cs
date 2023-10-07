@@ -11,7 +11,7 @@ namespace Bookstore
 {
     // task to complite
     // 1. add user to arrival, sale and reserve documents +
-    // 2. refresh book page when opens
+    // 2. refresh book page when opens +
     // 3. add sale, reserve, arrival command to books page
     // 4. customise books page to different users
     // 5. add satistic

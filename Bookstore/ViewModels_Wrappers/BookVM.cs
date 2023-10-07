@@ -108,6 +108,11 @@ namespace Bookstore
                     Model.Campaing = value.Model;
                     NotifyPropertyChanged(nameof(Campaing));
                 }
+                else if (value == null)
+                {
+                    Model.Campaing = null;
+                    NotifyPropertyChanged(nameof(Campaing));
+                }
             }
         }
         public bool IsSequel
@@ -130,6 +135,11 @@ namespace Bookstore
                 if (value != null && value.Model != Model.PrequelBook)
                 {
                     Model.PrequelBook = value.Model;
+                    NotifyPropertyChanged(nameof(PrequelBook));
+                }
+                else if(value == null)
+                {
+                    Model.PrequelBook = null;
                     NotifyPropertyChanged(nameof(PrequelBook));
                 }
             }

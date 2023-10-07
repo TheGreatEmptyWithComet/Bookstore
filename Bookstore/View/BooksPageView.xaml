@@ -46,20 +46,6 @@
                 </Button.Style>
             </Button>
 
-            <!-- Delete campaing button -->
-            <Button Command="{Binding BookPageVM.ClearCampaingCommand}" Content="Clear campaing" >
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-
         </StackPanel>
 
         <!-- Data table -->
@@ -67,9 +53,15 @@
             <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding BookPageVM.Books}" SelectedItem="{Binding BookPageVM.SelectedBook}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
-                    <DataGridTextColumn Header="Author first name" Binding="{Binding Path=Author.FirstName}"/>
-                    <DataGridTextColumn Header="Author last name" Binding="{Binding Path=Author.LastName}"/>
-                    <DataGridTextColumn Header="Pages number" Binding="{Binding Path=PagesNumber}"/>
+                    <DataGridTextColumn Header="Author" >
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Author.FirstName"/>
+                                <Binding Path="Author.LastName"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Pages" Binding="{Binding Path=PagesNumber}"/>
                     <DataGridTextColumn Header="Stock amount" Binding="{Binding Path=StockAmount}">
                         <!-- Highlight negative balances in red and bold -->
                         <DataGridTextColumn.CellStyle>

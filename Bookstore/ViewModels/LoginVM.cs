@@ -79,7 +79,7 @@ namespace Bookstore
             this.context = context;
 
             // !!! temporary assignment
-            isAdminMode = false;
+            isAdminMode = true;
 
             //LoadDataFromDB();
 
