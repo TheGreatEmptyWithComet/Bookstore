@@ -185,18 +185,7 @@ namespace Bookstore
         /****************************************************************************************/
         public int GeneralStockAmount
         {
-            get
-            {
-                if (Model != null)
-                {
-                    return Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) -
-                        Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount);
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+            get => Model != null ? Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) - Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount) : 0;
         }
         public int ReservedAmount
         {
@@ -205,6 +194,24 @@ namespace Bookstore
         public int AvailableToSaleAmount
         {
             get => GeneralStockAmount - ReservedAmount;
+        }
+       
+        // Properties for statistic
+        public int DaySalesAmount
+        {
+            get => Model.Sales.Where((sale) => sale.Book.Id == Model.Id && sale.DateTime>=DateTime.Now.AddDays(-1)).Sum((sale) => sale.Amount);
+        }
+        public int WeekSalesAmount
+        {
+            get => Model.Sales.Where((sale) => sale.Book.Id == Model.Id && sale.DateTime >= DateTime.Now.AddDays(-7)).Sum((sale) => sale.Amount);
+        }
+        public int MonthSalesAmount
+        {
+            get => Model.Sales.Where((sale) => sale.Book.Id == Model.Id && sale.DateTime >= DateTime.Now.AddMonths(-1)).Sum((sale) => sale.Amount);
+        }
+        public int YearSalesAmount
+        {
+            get => Model.Sales.Where((sale) => sale.Book.Id == Model.Id && sale.DateTime >= DateTime.Now.AddYears(-1)).Sum((sale) => sale.Amount);
         }
 
 

@@ -25,6 +25,27 @@ namespace Bookstore
             }
         }
 
+        // Calculated properties
+        /****************************************************************************************/
+        // Properties for statistic
+        public int DaySalesAmount
+        {
+            get => (new List<BookVM>(Model.Books.Where((book) => book.Genre.Equals(Model)).Select((i) => new BookVM(i)))).Sum((book) => book.DaySalesAmount);
+        }
+        public int WeekSalesAmount
+        {
+            get => (new List<BookVM>(Model.Books.Where((book) => book.Genre.Equals(Model)).Select((i) => new BookVM(i)))).Sum((book) => book.WeekSalesAmount);
+        }
+        public int MonthSalesAmount
+        {
+            get => (new List<BookVM>(Model.Books.Where((book) => book.Genre.Equals(Model)).Select((i) => new BookVM(i)))).Sum((book) => book.MonthSalesAmount);
+        }
+        public int YearSalesAmount
+        {
+            get => (new List<BookVM>(Model.Books.Where((book) => book.Genre.Equals(Model)).Select((i) => new BookVM(i)))).Sum((book) => book.YearSalesAmount);
+        }
+
+
 
         public GenreVM(Genre genre)
         {

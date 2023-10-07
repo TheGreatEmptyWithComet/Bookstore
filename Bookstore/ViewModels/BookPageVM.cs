@@ -33,10 +33,10 @@ namespace Bookstore
         // View model for window binding
         public BookVM CurrentBook { get; private set; }
 
+        //public ObservableCollection<BookVM> Books { get { return new ObservableCollection<BookVM>(allBooks.Select(i => new BookVM(i))); } }
         // DB row data
         private List<Book> allBooks;
         // Data for WPF
-        //public ObservableCollection<BookVM> Books { get { return new ObservableCollection<BookVM>(allBooks.Select(i => new BookVM(i))); } }
         public ICollectionView Books { get; private set; }
 
         private BookVM selectedBook;

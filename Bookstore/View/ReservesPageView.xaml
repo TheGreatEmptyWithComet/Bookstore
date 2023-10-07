@@ -29,14 +29,20 @@
         <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding SourceDataVM.ReservePageVM.Reserves}" SelectedItem="{Binding SourceDataVM.ReservePageVM.SelectedReserve}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Book title" Binding="{Binding Path=Book.Name}" />
-                <DataGridTextColumn Header="Author first name" Binding="{Binding Path=Book.Author.FirstName}"/>
-                <DataGridTextColumn Header="Author last name" Binding="{Binding Path=Book.Author.LastName}"/>
-                <DataGridTextColumn Header="Publishing year" Binding="{Binding Path=Book.Author.LastName}"/>
-                <DataGridTextColumn Header="Reserve date" Binding="{Binding Path=Date, StringFormat='dd.MM.yyyy'}"/>
+                <DataGridTextColumn Header="Author" >
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Book.Author.FirstName"/>
+                            <Binding Path="Book.Author.LastName"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Publication&#x0a;year" Binding="{Binding Path=Book.PublicationYear, StringFormat='dd.MM.yyyy'}"/>
+                <DataGridTextColumn Header="Reserve&#x0a;date" Binding="{Binding Path=Date, StringFormat='dd.MM.yyyy'}"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount}"/>
-                <DataGridTextColumn Header="Customer name" Binding="{Binding Path=Book.ReservedForCustomer.Name}"/>
-                <DataGridTextColumn Header="Customer phone" Binding="{Binding Path=Book.ReservedForCustomer.PhoneNumber}"/>
-                <DataGridTextColumn Header="Manager login" Binding="{Binding Path=User.Login}" Width="*"/>
+                <DataGridTextColumn Header="Customer&#x0a;name" Binding="{Binding Path=Book.ReservedForCustomer.Name}"/>
+                <DataGridTextColumn Header="Customer&#x0a;phone" Binding="{Binding Path=Book.ReservedForCustomer.PhoneNumber}"/>
+                <DataGridTextColumn Header="Manager&#x0a;login" Binding="{Binding Path=User.Login}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

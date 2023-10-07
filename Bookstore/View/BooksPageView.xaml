@@ -136,7 +136,7 @@
         </StackPanel>
 
         <!-- Data table -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="0 5 0 0">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0 5 0 0">
             <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding BookPageVM.Books}" SelectedItem="{Binding BookPageVM.SelectedBook}" Margin="5 0 0 5">
 
                 <DataGrid.Columns>
