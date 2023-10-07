@@ -19,38 +19,18 @@
             <Button Command="{Binding BookPageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}">Add</Button>
 
             <!-- Edit book button -->
-            <Button Command="{Binding BookPageVM.EditCommand}" Content="Edit">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding BookPageVM.EditCommand}" Content="Edit" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
 
             <!-- Delete book button -->
-            <Button Command="{Binding BookPageVM.DeleteCommand}" Content="Delete">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding BookPageVM.DeleteCommand}" Content="Delete" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
+
 
         </StackPanel>
 
         <!-- Data table -->
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding BookPageVM.Books}" SelectedItem="{Binding BookPageVM.SelectedBook}">
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
                     <DataGridTextColumn Header="Author" >
@@ -62,8 +42,8 @@
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Pages" Binding="{Binding Path=PagesNumber}"/>
-                    <DataGridTextColumn Header="Stock amount" Binding="{Binding Path=StockAmount}">
-                        <!-- Highlight negative balances in red and bold -->
+                    <DataGridTextColumn Header="Available&#x0a;amount" Binding="{Binding Path=AvailableToSaleAmount}">
+                        <!-- Highlight negative balances with red and bold -->
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="{x:Type DataGridCell}">
                                 <Style.Triggers>
@@ -75,15 +55,16 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Genre" Binding="{Binding Path=Genre.Name}"/>
-                    <DataGridTextColumn Header="Publication year" Binding="{Binding Path=PublicationYear, StringFormat='yyyy'}"/>
+                    <DataGridTextColumn Header="Reserved&#x0a;amount" Binding="{Binding Path=ReservedAmount}"/>
+                    <DataGridTextColumn  Header="Genre" Binding="{Binding Path=Genre.Name}"/>
+                    <DataGridTextColumn Header="Publication&#x0a;year" Binding="{Binding Path=PublicationYear, StringFormat='yyyy'}"/>
                     <DataGridTextColumn Header="Sales price" Binding="{Binding Path=SalesPrice}"/>
                     <DataGridTextColumn Header="Campaing name" Binding="{Binding Path=Campaing.Name}"/>
-                    <DataGridTextColumn Header="Discount percent" Binding="{Binding Path=Campaing.DiscountPercent}"/>
-                    <DataGridCheckBoxColumn Header="Is sequel" Binding="{Binding Path=IsSequel}"/>
+                    <DataGridTextColumn Header="Discount&#x0a;percent" Binding="{Binding Path=Campaing.DiscountPercent}"/>
+                    <DataGridCheckBoxColumn Header="Is&#x0a;sequel" Binding="{Binding Path=IsSequel}"/>
                     <DataGridTextColumn Header="Prequel book name" Binding="{Binding Path=PrequelBook.Name}"/>
-                    <DataGridCheckBoxColumn Header="New arrival" Binding="{Binding Path=IsNewArrival}"/>
-                    <DataGridTextColumn Header="Reserved for customer" Binding="{Binding Path=ReservedForCustomer.PhoneNumber}"/>
+                    <DataGridCheckBoxColumn Header="New&#x0a;arrival" Binding="{Binding Path=IsNewArrival}"/>
+                    <DataGridTextColumn Header="Reserved for&#x0a;customer" Binding="{Binding Path=ReservedForCustomer.PhoneNumber}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

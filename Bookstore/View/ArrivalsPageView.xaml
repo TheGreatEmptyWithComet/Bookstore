@@ -19,34 +19,13 @@
             <Button Command="{Binding SourceDataVM.ArrivalPageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}">Add</Button>
 
             <!-- Edit button -->
-            <Button Command="{Binding SourceDataVM.ArrivalPageVM.EditCommand}" Content="Edit">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding SourceDataVM.ArrivalPageVM.EditCommand}" Content="Edit" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
 
             <!-- Delete button -->
-            <Button Command="{Binding SourceDataVM.ArrivalPageVM.DeleteCommand}" Content="Delete">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding SourceDataVM.ArrivalPageVM.DeleteCommand}" Content="Delete" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
+            
         </StackPanel>
-
+        
         <!-- Data table -->
         <DataGrid x:Name="DataGrid" Style="{DynamicResource Style_DataGridBase}" ItemsSource="{Binding SourceDataVM.ArrivalPageVM.Arrivals}" SelectedItem="{Binding SourceDataVM.ArrivalPageVM.SelectedArrival}">
             <DataGrid.Columns>

@@ -79,6 +79,7 @@ namespace Bookstore
             this.context = context;
 
             // !!! temporary assignment
+            CurrentUser = context.Users.Where(user => user.Login == "admin").FirstOrDefault()!;
             isAdminMode = true;
 
             //LoadDataFromDB();

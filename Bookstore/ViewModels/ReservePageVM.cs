@@ -156,6 +156,17 @@ namespace Bookstore
                 ErrorMessage = "Amount must be bigger than 0";
                 return;
             }
+            else if (editDataMode == false && CurrentReserve.Book != null && CurrentReserve.Amount > CurrentReserve.Book.AvailableToSaleAmount)
+            {
+                ErrorMessage = "Amount to reserve is bigger than available amount";
+                return;
+            }
+            // if reserve is edited, it takes into consideration the old reserve amount when check the available stock exceeding
+            else if (editDataMode == true && CurrentReserve.Book != null && CurrentReserve.Amount > CurrentReserve.Book.AvailableToSaleAmount + SelectedReserve.Amount)
+            {
+                ErrorMessage = "Amount to reserve is bigger than available amount";
+                return;
+            }
 
             reserveDataWindow.DialogResult = true;
             reserveDataWindow.Close();

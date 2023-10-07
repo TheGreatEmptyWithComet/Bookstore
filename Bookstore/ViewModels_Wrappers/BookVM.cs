@@ -137,7 +137,7 @@ namespace Bookstore
                     Model.PrequelBook = value.Model;
                     NotifyPropertyChanged(nameof(PrequelBook));
                 }
-                else if(value == null)
+                else if (value == null)
                 {
                     Model.PrequelBook = null;
                     NotifyPropertyChanged(nameof(PrequelBook));
@@ -183,12 +183,18 @@ namespace Bookstore
 
         // Calculated properties
         /****************************************************************************************/
-        public int StockAmount
+        public int GeneralStockAmount
         {
-            // Stock amount = Arrivals - Sales - Reserves
             get => Model.Arrivals.Where((arr) => arr.Book.Id == Model.Id).Sum((arr) => arr.Amount) -
-                Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount) -
-                Model.Reserves.Where((res) => res.Book.Id == Model.Id).Sum((res) => res.Amount);
+                Model.Sales.Where((sale) => sale.Book.Id == Model.Id).Sum((sale) => sale.Amount);
+        }
+        public int ReservedAmount
+        {
+            get => Model.Reserves.Where((res) => res.Book.Id == Model.Id).Sum((res) => res.Amount);
+        }
+        public int AvailableToSaleAmount
+        {
+            get => GeneralStockAmount - ReservedAmount;
         }
 
 

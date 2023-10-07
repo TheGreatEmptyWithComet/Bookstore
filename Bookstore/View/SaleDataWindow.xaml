@@ -26,7 +26,7 @@
 
                 <!-- Available amount-->
                 <TextBlock Text="Available amount:" Style="{DynamicResource Style_WindowTextBlock}"/>
-                <TextBlock Text="{Binding SourceDataVM.SalePageVM.CurrentSale.Book.StockAmount}" Style="{DynamicResource Style_WindowTextBoxNoEditableTextBlock}"/>
+                <TextBlock Text="{Binding SourceDataVM.SalePageVM.CurrentSale.Book.AvailableToSaleAmount}" Style="{DynamicResource Style_WindowTextBoxNoEditableTextBlock}"/>
                 
                 <!-- Amount to sale-->
                 <TextBlock Text="Amount to sale:" Style="{DynamicResource Style_WindowTextBlock}"/>

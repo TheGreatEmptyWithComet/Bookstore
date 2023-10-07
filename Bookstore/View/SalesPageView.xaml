@@ -19,32 +19,10 @@
             <Button Command="{Binding SourceDataVM.SalePageVM.AddCommand}" Style="{DynamicResource Style_MenuButtonBase}">Add</Button>
 
             <!-- Edit button -->
-            <Button Command="{Binding SourceDataVM.SalePageVM.EditCommand}" Content="Edit">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding SourceDataVM.SalePageVM.EditCommand}" Content="Edit" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
 
             <!-- Delete button -->
-            <Button Command="{Binding SourceDataVM.SalePageVM.DeleteCommand}" Content="Delete">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style_MenuButtonBase}">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding ="{Binding ElementName=DataGrid, Path=SelectedIndex}" Value="-1">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <Button Command="{Binding SourceDataVM.SalePageVM.DeleteCommand}" Content="Delete" Style="{DynamicResource Style_MenuVisibleOnSelectionButton}"/>
         </StackPanel>
 
         <!-- Data table -->

@@ -158,7 +158,18 @@ namespace Bookstore
                 ErrorMessage = "Amount must be bigger than 0";
                 return;
             }
-            // check cost
+            else if (editDataMode == false && CurrentSale.Book != null && CurrentSale.Amount > CurrentSale.Book.AvailableToSaleAmount)
+            {
+                ErrorMessage = "Amount to sale is bigger than available amount";
+                return;
+            }
+            // if sale is edited, it takes into consideration the old lase amount when check the available stock exceeding
+            else if (editDataMode == true && CurrentSale.Book != null && CurrentSale.Amount > CurrentSale.Book.AvailableToSaleAmount + SelectedSale.Amount)
+            {
+                ErrorMessage = "Amount to sale is bigger than available amount";
+                return;
+            }
+            // check price
             else if (CurrentSale.Price <= 0)
             {
                 ErrorMessage = "Price must be bigger than 0";
