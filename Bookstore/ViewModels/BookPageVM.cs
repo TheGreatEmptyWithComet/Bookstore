@@ -202,7 +202,6 @@ namespace Bookstore
                 PrequelBook = SelectedBook.Model.PrequelBook,
                 IsNewArrival = SelectedBook.IsNewArrival,
                 ReservedForCustomer = SelectedBook.Model.ReservedForCustomer,
-                OriginBook = SelectedBook.Model.OriginBook
             };
             CurrentBook = new BookVM(editedBook);
             ErrorMessage = string.Empty;
@@ -226,7 +225,6 @@ namespace Bookstore
                 SelectedBook.Model.PrequelBook = editedBook.PrequelBook;
                 SelectedBook.IsNewArrival = editedBook.IsNewArrival ?? false;
                 SelectedBook.Model.ReservedForCustomer = editedBook.ReservedForCustomer;
-                SelectedBook.Model.OriginBook = editedBook.OriginBook;
 
                 editDataMode = false;
 

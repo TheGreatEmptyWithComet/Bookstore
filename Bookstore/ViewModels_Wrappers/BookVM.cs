@@ -168,18 +168,7 @@ namespace Bookstore
                 }
             }
         }
-        public BookVM? OriginBook
-        {
-            get => Model.OriginBook != null ? new BookVM(Model.OriginBook) : null;
-            set
-            {
-                if (value != null && value.Model != Model.OriginBook)
-                {
-                    Model.OriginBook = value.Model;
-                    NotifyPropertyChanged(nameof(OriginBook));
-                }
-            }
-        }
+
 
         // Calculated properties
         /****************************************************************************************/

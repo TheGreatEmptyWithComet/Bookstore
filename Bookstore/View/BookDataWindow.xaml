@@ -158,11 +158,10 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Campaing selection combo box -->
+                        <!-- Campaing selection combobox -->
                         <ComboBox ItemsSource="{Binding  SourceDataVM.CampaingPageVM.Campaings}" 
-                                  SelectedItem="{Binding BookPageVM.CurrentBook.Campaing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  SelectedItem="{Binding BookPageVM.CurrentBook.Campaing}" 
                                   Grid.Column="0"
-                                  x:Name="CampaingComboBox"
                                   Style="{DynamicResource Style_ComboBoxBase}">
 
                             <ComboBox.ItemTemplate>
